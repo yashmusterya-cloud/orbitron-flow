@@ -9,6 +9,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ProgressStepper } from "@/components/ProgressStepper";
 import { AgentStatus } from "@/components/AgentStatus";
+import { ProcessingProgress } from "@/components/ProcessingProgress";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -212,12 +213,15 @@ export default function Home() {
       {isProcessing && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-card p-8 rounded-lg shadow-xl border-2 border-primary/50 max-w-md w-full mx-4">
-            <div className="flex flex-col items-center space-y-4">
-              <Loader2 className="w-16 h-16 animate-spin text-primary" />
-              <h3 className="text-xl font-semibold">AI Agent Working...</h3>
-              <p className="text-muted-foreground text-center">
-                Technical agent is analyzing products and calculating spec match percentages
-              </p>
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-center">Technical Agent Processing</h3>
+              <ProcessingProgress 
+                stages={[
+                  { label: "Loading product database...", duration: 800 },
+                  { label: "Analyzing specifications...", duration: 600 },
+                  { label: "Calculating match percentages...", duration: 600 },
+                ]}
+              />
             </div>
           </div>
         </div>

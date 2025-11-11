@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ProgressStepper } from "@/components/ProgressStepper";
 import { AgentStatus } from "@/components/AgentStatus";
+import { ProcessingProgress } from "@/components/ProcessingProgress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -123,12 +124,14 @@ export default function TechnicalAgent() {
       {isProcessing && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-card p-8 rounded-lg shadow-xl border-2 border-primary/50 max-w-md w-full mx-4">
-            <div className="flex flex-col items-center space-y-4">
-              <Loader2 className="w-16 h-16 animate-spin text-primary" />
-              <h3 className="text-xl font-semibold">Processing...</h3>
-              <p className="text-muted-foreground text-center">
-                Moving to pricing calculation
-              </p>
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-center">Moving to Pricing Agent</h3>
+              <ProcessingProgress 
+                stages={[
+                  { label: "Validating product selection...", duration: 500 },
+                  { label: "Preparing pricing data...", duration: 1000 },
+                ]}
+              />
             </div>
           </div>
         </div>
