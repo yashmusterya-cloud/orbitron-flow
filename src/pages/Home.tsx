@@ -47,6 +47,14 @@ export default function Home() {
 
   const agentWorkflow = [
     {
+      agent: "Main Agent",
+      description: "Orchestrates the entire workflow and coordinates all agents",
+      inputs: "RFP request",
+      outputs: "Workflow plan, agent delegation",
+      icon: GitBranch,
+      color: "from-agent-orchestrator to-agent-orchestrator",
+    },
+    {
       agent: "Sales Agent",
       description: "Monitors tender portals and detects new RFPs",
       inputs: "RFP URLs, tender portals",
@@ -71,10 +79,10 @@ export default function Home() {
       color: "from-agent-pricing to-status-complete",
     },
     {
-      agent: "Final Response",
-      description: "Compiles all data into professional RFP response",
+      agent: "Main Agent",
+      description: "Validates outputs and generates final RFP response",
       inputs: "All agent outputs",
-      outputs: "PDF response document",
+      outputs: "Professional RFP response document",
       icon: FileText,
       color: "from-agent-orchestrator to-agent-orchestrator",
     },
@@ -249,7 +257,7 @@ export default function Home() {
 
               <p className="text-xl text-muted-foreground leading-relaxed">
                 End-to-end automation for B2B RFP qualification, SKU matching & pricing. 
-                Watch multiple specialized AI agents work together in real-time.
+                Watch the Main Agent orchestrate specialized AI agents working together in real-time.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -440,11 +448,11 @@ export default function Home() {
               How The Agentic AI System Works
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Five specialized AI agents working in perfect harmony to automate your entire RFP process
+              Main Agent orchestrates specialized AI agents to automate your entire RFP process
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-5 gap-6">
             {agentWorkflow.map((workflow, idx) => (
               <div key={idx} className="relative group">
                 <Card className="h-full border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-in-up cursor-pointer">
@@ -467,6 +475,16 @@ export default function Home() {
                         <p className="font-semibold text-status-complete">Outputs:</p>
                         <p className="text-muted-foreground">{workflow.outputs}</p>
                       </div>
+                      {workflow.agent === "Main Agent" && (
+                        <div className="text-xs pt-2 border-t border-border">
+                          <p className="font-semibold text-agent-orchestrator">Orchestration:</p>
+                          <p className="text-muted-foreground">
+                            {idx === 0 
+                              ? "Initiates workflow & delegates tasks"
+                              : "Quality checks & generates final output"}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

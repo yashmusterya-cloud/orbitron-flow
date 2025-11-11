@@ -30,7 +30,7 @@ All colors MUST be HSL.
     --secondary-hover: 215 19% 35%; /* #475569 - Darker slate hover */
 
     /* AI Agent Colors - Enterprise Professional */
-    --agent-orchestrator: 221 72% 40%; /* Deep Blue - Main orchestration */
+    --agent-orchestrator: 272 83% 58%; /* #7C3AED - Purple for Main Agent orchestration */
     --agent-technical: 199 89% 32%; /* #0369a1 - Info blue for technical */
     --agent-pricing: 160 84% 30%; /* #059669 - Professional green */
     --agent-sales: 217 91% 60%; /* #3b82f6 - Action blue */
@@ -62,7 +62,7 @@ All colors MUST be HSL.
     /* Professional Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%));
     --gradient-hero: linear-gradient(-45deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%), hsl(160, 84%, 30%), hsl(199, 89%, 32%));
-    --gradient-agent: linear-gradient(135deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%));
+    --gradient-agent: linear-gradient(135deg, hsl(272, 83%, 58%), hsl(272, 83%, 65%));
     --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(210, 40%, 98%));
 
     /* Enterprise Shadows */
@@ -97,7 +97,7 @@ All colors MUST be HSL.
     --secondary-foreground: 0 0% 100%;
     --secondary-hover: 215 20% 45%;
 
-    --agent-orchestrator: 221 72% 50%;
+    --agent-orchestrator: 272 83% 65%;
     --agent-technical: 199 89% 45%;
     --agent-pricing: 160 84% 40%;
     --agent-sales: 217 91% 65%;
@@ -123,7 +123,7 @@ All colors MUST be HSL.
 
     --gradient-primary: linear-gradient(135deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%));
     --gradient-hero: linear-gradient(-45deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%), hsl(160, 84%, 40%), hsl(199, 89%, 45%));
-    --gradient-agent: linear-gradient(135deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%));
+    --gradient-agent: linear-gradient(135deg, hsl(272, 83%, 65%), hsl(272, 83%, 70%));
     --gradient-card: linear-gradient(180deg, hsl(215, 28%, 22%), hsl(215, 28%, 25%));
 
     --shadow-glow: 0 0 40px hsl(217 91% 65% / 0.3);

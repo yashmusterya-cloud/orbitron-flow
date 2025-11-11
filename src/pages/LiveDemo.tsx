@@ -176,7 +176,7 @@ export default function LiveDemo() {
             </Badge>
             <h1 className="text-5xl font-bold">Live RFP Processing Demo</h1>
             <p className="text-xl text-muted-foreground">
-              Watch our AI agents process a complete RFP from start to finish in real-time
+              Watch the Main Agent orchestrate specialized AI agents to process a complete RFP from start to finish in real-time
             </p>
           </div>
         </div>
