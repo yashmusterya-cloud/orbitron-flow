@@ -5,8 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, XCircle, AlertCircle, ArrowRight } from "lucide-react";
+import { CheckCircle2, XCircle, AlertCircle, ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductMatch {
   sku: string;
@@ -79,7 +80,9 @@ const oemProducts: ProductMatch[] = [
 
 export default function TechnicalAgent() {
   const [selectedSKU, setSelectedSKU] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const getMatchColor = (percentage: number) => {
     if (percentage >= 90) return "text-status-complete";
@@ -95,7 +98,19 @@ export default function TechnicalAgent() {
 
   const handleProceedToPricing = () => {
     if (selectedSKU) {
-      navigate("/pricing-agent", { state: { selectedSKU, rfpRequirements } });
+      setIsProcessing(true);
+      
+      setTimeout(() => {
+        setIsProcessing(false);
+        toast({
+          title: "Moving to Pricing Agent",
+          description: "Product selected. Calculating costs...",
+        });
+        
+        setTimeout(() => {
+          navigate("/pricing-agent", { state: { selectedSKU, rfpRequirements } });
+        }, 500);
+      }, 1500);
     }
   };
 
@@ -103,6 +118,21 @@ export default function TechnicalAgent() {
     <div className="min-h-screen bg-background">
       <ProgressStepper />
       <AgentStatus />
+      
+      {/* Loading Overlay */}
+      {isProcessing && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-card p-8 rounded-lg shadow-xl border-2 border-primary/50 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center space-y-4">
+              <Loader2 className="w-16 h-16 animate-spin text-primary" />
+              <h3 className="text-xl font-semibold">Processing...</h3>
+              <p className="text-muted-foreground text-center">
+                Moving to pricing calculation
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
@@ -254,11 +284,20 @@ export default function TechnicalAgent() {
           <Button
             size="lg"
             onClick={handleProceedToPricing}
-            disabled={!selectedSKU}
+            disabled={!selectedSKU || isProcessing}
             className="gap-2"
           >
-            Proceed to Pricing
-            <ArrowRight className="w-5 h-5" />
+            {isProcessing ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                Proceed to Pricing
+                <ArrowRight className="w-5 h-5" />
+              </>
+            )}
           </Button>
         </div>
       </div>

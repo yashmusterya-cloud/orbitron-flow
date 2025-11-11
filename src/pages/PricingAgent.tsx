@@ -91,7 +91,8 @@ export default function PricingAgent() {
             <CardDescription>Product pricing based on selected SKU</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -121,6 +122,29 @@ export default function PricingAgent() {
                 </TableBody>
               </Table>
             </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4">
+              <div className="border rounded-lg p-4 space-y-3 bg-card">
+                <h3 className="font-bold text-lg text-primary">{pricingData.sku}</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center py-2 border-b">
+                    <span className="text-sm text-muted-foreground">Unit Price</span>
+                    <span className="font-semibold">₹{pricingData.pricePerMeter}/meter</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b">
+                    <span className="text-sm text-muted-foreground">Quantity</span>
+                    <span className="font-semibold">{pricingData.quantity} meters</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="font-semibold">Total Cost</span>
+                    <span className="text-xl font-bold text-agent-pricing">
+                      ₹{pricingData.materialCost.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -134,7 +158,8 @@ export default function PricingAgent() {
             <CardDescription>Required tests and associated costs</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -165,6 +190,27 @@ export default function PricingAgent() {
                   </TableRow>
                 </TableBody>
               </Table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3">
+              {pricingData.tests.map((test) => (
+                <div key={test.name} className="border rounded-lg p-4 space-y-2 bg-card">
+                  <div className="flex justify-between items-start">
+                    <h4 className="font-semibold">{test.name}</h4>
+                    <span className="font-bold text-agent-pricing">₹{test.cost.toLocaleString()}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground">Quantity: 1</div>
+                </div>
+              ))}
+              <div className="border-2 rounded-lg p-4 bg-muted/30">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">Total Testing Cost</span>
+                  <span className="text-xl font-bold text-agent-pricing">
+                    ₹{pricingData.testCosts.toLocaleString()}
+                  </span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

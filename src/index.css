@@ -17,26 +17,26 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Brand Colors - RFP AI Identity */
-    --primary: 174 84% 32%; /* Teal - Trust + Innovation */
+    /* Brand Colors - B2B Professional */
+    --primary: 221 83% 53%; /* Blue #2563eb - Primary actions */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 174 84% 45%;
+    --primary-glow: 221 83% 65%;
 
-    --secondary: 21 92% 48%; /* Orange - Action + Urgency */
+    --secondary: 25 95% 53%; /* Orange #d97706 - Warning/Urgent */
     --secondary-foreground: 0 0% 100%;
 
     /* AI Agent Colors */
     --agent-orchestrator: 262 83% 58%; /* Purple - Main Agent */
-    --agent-technical: 217 91% 60%; /* Blue - Technical */
-    --agent-pricing: 160 84% 39%; /* Green - Finance */
-    --agent-sales: 38 92% 50%; /* Orange - Discovery */
+    --agent-technical: 221 83% 53%; /* Blue - Technical */
+    --agent-pricing: 142 76% 36%; /* Green - Finance */
+    --agent-sales: 25 95% 53%; /* Orange - Discovery */
 
-    /* Status Colors (Loopio-inspired) */
-    --status-active: 174 84% 32%; /* Processing */
-    --status-complete: 160 84% 39%; /* Success */
-    --status-review: 217 91% 60%; /* Pending */
-    --status-warning: 38 92% 50%; /* Action Required */
-    --status-error: 0 84% 60%; /* Issues */
+    /* Status Colors - B2B Professional */
+    --status-active: 221 83% 53%; /* Processing - Blue */
+    --status-complete: 142 76% 36%; /* Success - Green #16a34a */
+    --status-review: 221 83% 53%; /* Pending - Blue */
+    --status-warning: 25 95% 53%; /* Action Required - Orange #d97706 */
+    --status-error: 0 84% 60%; /* Issues - Red */
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
@@ -82,17 +82,17 @@ All colors MUST be HSL.
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 174 84% 42%;
+    --primary: 221 83% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 174 84% 55%;
+    --primary-glow: 221 83% 70%;
 
-    --secondary: 21 92% 55%;
+    --secondary: 25 95% 60%;
     --secondary-foreground: 0 0% 100%;
 
     --agent-orchestrator: 262 83% 65%;
-    --agent-technical: 217 91% 70%;
-    --agent-pricing: 160 84% 45%;
-    --agent-sales: 38 92% 58%;
+    --agent-technical: 221 83% 60%;
+    --agent-pricing: 142 76% 45%;
+    --agent-sales: 25 95% 60%;
 
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
@@ -126,8 +126,39 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-sans antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+  /* Typography Hierarchy - B2B Professional */
+  h1 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  
+  h2 {
+    @apply text-xl font-semibold tracking-tight;
+  }
+  
+  h3 {
+    @apply text-lg font-semibold tracking-tight;
+  }
+  
+  h4, h5, h6 {
+    @apply text-base font-semibold tracking-tight;
+  }
+  
+  /* Table Headers */
+  thead {
+    @apply text-sm font-medium;
+  }
+  
+  /* Body Text */
+  body {
+    @apply text-base;
+  }
+  
+  /* Touch Targets - Mobile Friendly */
+  @media (max-width: 768px) {
+    button, a {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }
 
@@ -280,6 +311,54 @@ All colors MUST be HSL.
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+  
+  /* Section Spacing - B2B Professional */
+  .section-spacing {
+    @apply py-4;
+  }
+  
+  .section-gap {
+    @apply space-y-4;
+  }
+  
+  /* Mobile Card Layout for Tables */
+  @media (max-width: 768px) {
+    .mobile-card {
+      @apply block border rounded-lg p-4 mb-2 bg-card;
+    }
+    
+    .mobile-card-row {
+      @apply flex justify-between items-center py-2 border-b last:border-b-0;
+    }
+    
+    .mobile-card-label {
+      @apply text-sm font-medium text-muted-foreground;
+    }
+    
+    .mobile-card-value {
+      @apply text-sm font-semibold;
+    }
+  }
+  
+  /* Loading States */
+  .loading-overlay {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full h-12 w-12 border-b-2 border-primary;
+  }
+  
+  /* Success Animation */
+  @keyframes check-scale {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  .success-check {
+    animation: check-scale 0.5s ease-out forwards;
   }
 }
 

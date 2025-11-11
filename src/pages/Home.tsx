@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { ProgressStepper } from "@/components/ProgressStepper";
 import { AgentStatus } from "@/components/AgentStatus";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 import {
   ArrowRight,
   Search,
@@ -28,12 +29,14 @@ import {
 
 export default function Home() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [rfpLoaded, setRfpLoaded] = useState(false);
   const [specMatchRun, setSpecMatchRun] = useState(false);
   const [skuSelected, setSkuSelected] = useState(false);
   const [pricingCalculated, setPricingCalculated] = useState(false);
   const [rfpUrls, setRfpUrls] = useState("");
   const [isScanning, setIsScanning] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [rfpList, setRfpList] = useState<Array<{
     id: string;
     title: string;
@@ -134,12 +137,35 @@ export default function Home() {
     setSpecMatchRun(false);
     setSkuSelected(false);
     setPricingCalculated(false);
+    
+    toast({
+      title: "RFP Loaded Successfully",
+      description: "Sample RFP data has been loaded for demo purposes.",
+    });
   };
 
   const handleRunSpecMatch = () => {
-    setSpecMatchRun(true);
-    setSkuSelected(true);
-    setPricingCalculated(true);
+    setIsProcessing(true);
+    
+    setTimeout(() => {
+      setSpecMatchRun(true);
+      setIsProcessing(false);
+      
+      toast({
+        title: "Spec Match Complete",
+        description: "AI agent analyzed 3 products and found perfect match.",
+      });
+      
+      setTimeout(() => {
+        setSkuSelected(true);
+        setPricingCalculated(true);
+        
+        toast({
+          title: "SKU Selected & Priced",
+          description: "AP-XLPE-95A selected with 100% match. Pricing calculated.",
+        });
+      }, 1000);
+    }, 2000);
   };
 
   const handleScanRFPs = () => {
@@ -151,6 +177,11 @@ export default function Home() {
         { id: "3", title: "Power Cables - Industrial", dueDate: "Aug 25, 2024", status: "urgent" },
       ]);
       setIsScanning(false);
+      
+      toast({
+        title: "RFPs Scanned Successfully",
+        description: "Found 3 RFPs ready for processing.",
+      });
     }, 2000);
   };
 
@@ -176,6 +207,21 @@ export default function Home() {
       <Navigation />
       <ProgressStepper />
       <AgentStatus />
+      
+      {/* Loading Overlay */}
+      {isProcessing && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="bg-card p-8 rounded-lg shadow-xl border-2 border-primary/50 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center space-y-4">
+              <Loader2 className="w-16 h-16 animate-spin text-primary" />
+              <h3 className="text-xl font-semibold">AI Agent Working...</h3>
+              <p className="text-muted-foreground text-center">
+                Technical agent is analyzing products and calculating spec match percentages
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section id="home" className="relative pt-8 pb-20 overflow-hidden">
@@ -292,7 +338,8 @@ export default function Home() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="overflow-x-auto">
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -324,6 +371,30 @@ export default function Home() {
                         ))}
                       </TableBody>
                     </Table>
+                  </div>
+
+                  {/* Mobile Card View */}
+                  <div className="md:hidden space-y-4">
+                    {rfpList.map((rfp) => (
+                      <div key={rfp.id} className="border rounded-lg p-4 space-y-3 bg-card">
+                        <div className="flex justify-between items-start">
+                          <h3 className="font-semibold text-base flex-1">{rfp.title}</h3>
+                          <Badge className={getStatusBadge(rfp.status)}>
+                            {rfp.status.charAt(0).toUpperCase() + rfp.status.slice(1)}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Due: {rfp.dueDate}
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={() => navigate("/technical-agent")}
+                          className="w-full"
+                        >
+                          Respond
+                        </Button>
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -459,30 +530,64 @@ export default function Home() {
             <div className="max-w-6xl mx-auto space-y-8">
               <Card className="animate-fade-in-up">
                 <CardContent className="p-6">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>SKU</TableHead>
-                        <TableHead>Armouring</TableHead>
-                        <TableHead>Insulation</TableHead>
-                        <TableHead>Voltage</TableHead>
-                        <TableHead>Size</TableHead>
-                        <TableHead>Standard</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {oemProducts.map((product) => (
-                        <TableRow key={product.sku}>
-                          <TableCell className="font-semibold">{product.sku}</TableCell>
-                          <TableCell>{product.armouring}</TableCell>
-                          <TableCell>{product.insulation}</TableCell>
-                          <TableCell>{product.voltage}</TableCell>
-                          <TableCell>{product.size}</TableCell>
-                          <TableCell>{product.standard}</TableCell>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>SKU</TableHead>
+                          <TableHead>Armouring</TableHead>
+                          <TableHead>Insulation</TableHead>
+                          <TableHead>Voltage</TableHead>
+                          <TableHead>Size</TableHead>
+                          <TableHead>Standard</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {oemProducts.map((product) => (
+                          <TableRow key={product.sku}>
+                            <TableCell className="font-semibold">{product.sku}</TableCell>
+                            <TableCell>{product.armouring}</TableCell>
+                            <TableCell>{product.insulation}</TableCell>
+                            <TableCell>{product.voltage}</TableCell>
+                            <TableCell>{product.size}</TableCell>
+                            <TableCell>{product.standard}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Mobile Card View */}
+                  <div className="md:hidden space-y-4">
+                    {oemProducts.map((product) => (
+                      <div key={product.sku} className="border rounded-lg p-4 space-y-3 bg-card">
+                        <h3 className="font-bold text-lg text-primary">{product.sku}</h3>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="text-sm text-muted-foreground">Armouring</p>
+                            <p className="font-medium">{product.armouring}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Insulation</p>
+                            <p className="font-medium">{product.insulation}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Voltage</p>
+                            <p className="font-medium">{product.voltage}</p>
+                          </div>
+                          <div>
+                            <p className="text-sm text-muted-foreground">Size</p>
+                            <p className="font-medium">{product.size}</p>
+                          </div>
+                          <div className="col-span-2">
+                            <p className="text-sm text-muted-foreground">Standard</p>
+                            <p className="font-medium">{product.standard}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
 
@@ -491,11 +596,21 @@ export default function Home() {
                   variant="hero" 
                   size="xl" 
                   onClick={handleRunSpecMatch}
+                  disabled={isProcessing || specMatchRun}
                   className="group"
                 >
-                  <Cpu className="w-5 h-5 mr-2" />
-                  Run Spec Match Analysis
-                  <TrendingUp className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Agent Analyzing...
+                    </>
+                  ) : (
+                    <>
+                      <Cpu className="w-5 h-5 mr-2" />
+                      Run Spec Match Analysis
+                      <TrendingUp className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </Button>
               </div>
 
@@ -508,38 +623,68 @@ export default function Home() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>SKU</TableHead>
-                          <TableHead>Match %</TableHead>
-                          <TableHead>Reason</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {specMatchResults.map((result) => (
-                          <TableRow key={result.sku}>
-                            <TableCell className="font-semibold">{result.sku}</TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <div className="w-full max-w-[200px] bg-muted rounded-full h-2">
-                                  <div 
-                                    className={`h-full rounded-full ${
-                                      result.match === 100 ? 'bg-status-complete' : 
-                                      result.match >= 80 ? 'bg-status-active' : 
-                                      'bg-status-warning'
-                                    }`}
-                                    style={{ width: `${result.match}%` }}
-                                  />
-                                </div>
-                                <span className="font-bold">{result.match}%</span>
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">{result.reason}</TableCell>
+                    {/* Desktop Table View */}
+                    <div className="hidden md:block overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>SKU</TableHead>
+                            <TableHead>Match %</TableHead>
+                            <TableHead>Reason</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                        </TableHeader>
+                        <TableBody>
+                          {specMatchResults.map((result) => (
+                            <TableRow key={result.sku}>
+                              <TableCell className="font-semibold">{result.sku}</TableCell>
+                              <TableCell>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-full max-w-[200px] bg-muted rounded-full h-2">
+                                    <div 
+                                      className={`h-full rounded-full ${
+                                        result.match === 100 ? 'bg-status-complete' : 
+                                        result.match >= 80 ? 'bg-status-active' : 
+                                        'bg-status-warning'
+                                      }`}
+                                      style={{ width: `${result.match}%` }}
+                                    />
+                                  </div>
+                                  <span className="font-bold">{result.match}%</span>
+                                </div>
+                              </TableCell>
+                              <TableCell className="text-muted-foreground">{result.reason}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
+
+                    {/* Mobile Card View */}
+                    <div className="md:hidden space-y-4">
+                      {specMatchResults.map((result) => (
+                        <div key={result.sku} className="border rounded-lg p-4 space-y-3 bg-card">
+                          <div className="flex justify-between items-start">
+                            <h3 className="font-bold text-lg">{result.sku}</h3>
+                            <span className={`font-bold text-lg ${
+                              result.match === 100 ? 'text-status-complete' : 
+                              result.match >= 80 ? 'text-status-active' : 
+                              'text-status-warning'
+                            }`}>{result.match}%</span>
+                          </div>
+                          <div className="w-full bg-muted rounded-full h-2">
+                            <div 
+                              className={`h-full rounded-full ${
+                                result.match === 100 ? 'bg-status-complete' : 
+                                result.match >= 80 ? 'bg-status-active' : 
+                                'bg-status-warning'
+                              }`}
+                              style={{ width: `${result.match}%` }}
+                            />
+                          </div>
+                          <p className="text-sm text-muted-foreground">{result.reason}</p>
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               )}
