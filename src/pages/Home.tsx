@@ -8,6 +8,7 @@ import { AIOrbit } from "@/components/AIOrbit";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ProgressStepper } from "@/components/ProgressStepper";
+import { AgentStatus } from "@/components/AgentStatus";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
@@ -174,6 +175,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Navigation />
       <ProgressStepper />
+      <AgentStatus />
 
       {/* Hero Section */}
       <section id="home" className="relative pt-8 pb-20 overflow-hidden">

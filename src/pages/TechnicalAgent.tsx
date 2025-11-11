@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ProgressStepper } from "@/components/ProgressStepper";
+import { AgentStatus } from "@/components/AgentStatus";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -101,6 +102,7 @@ export default function TechnicalAgent() {
   return (
     <div className="min-h-screen bg-background">
       <ProgressStepper />
+      <AgentStatus />
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
