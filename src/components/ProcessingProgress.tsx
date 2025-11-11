@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Progress } from "@/components/ui/progress";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
+import { fireCelebration } from "@/lib/confetti";
 
 interface ProcessingStage {
   label: string;
@@ -16,6 +17,7 @@ export function ProcessingProgress({ stages, onComplete }: ProcessingProgressPro
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
 
   const totalDuration = stages.reduce((sum, stage) => sum + stage.duration, 0);
   const currentStage = stages[currentStageIndex];
@@ -43,7 +45,17 @@ export function ProcessingProgress({ stages, onComplete }: ProcessingProgressPro
           setCurrentStageIndex(currentStageIndex + 1);
         } else {
           setProgress(100);
-          onComplete?.();
+          setIsComplete(true);
+          
+          // Fire confetti celebration!
+          setTimeout(() => {
+            fireCelebration();
+          }, 100);
+          
+          // Call onComplete after confetti starts
+          setTimeout(() => {
+            onComplete?.();
+          }, 500);
         }
       }
     };
@@ -56,20 +68,36 @@ export function ProcessingProgress({ stages, onComplete }: ProcessingProgressPro
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center gap-3">
-        <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        {isComplete ? (
+          <CheckCircle2 className="w-6 h-6 text-status-complete animate-in zoom-in duration-300 success-check" />
+        ) : (
+          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        )}
         <div className="flex-1">
           <div className="flex justify-between items-center mb-2">
-            <p className="text-sm font-semibold">{currentStage?.label}</p>
-            <p className="text-sm text-muted-foreground">{Math.round(progress)}%</p>
+            <p className={`text-sm font-semibold ${isComplete ? 'text-status-complete' : ''}`}>
+              {isComplete ? 'Complete!' : currentStage?.label}
+            </p>
+            <p className={`text-sm ${isComplete ? 'text-status-complete font-bold' : 'text-muted-foreground'}`}>
+              {Math.round(progress)}%
+            </p>
           </div>
           <Progress value={progress} className="h-2" />
         </div>
       </div>
       
-      <div className="flex justify-between items-center text-xs text-muted-foreground">
-        <span>Stage {currentStageIndex + 1} of {stages.length}</span>
-        <span>~{timeRemaining}s remaining</span>
-      </div>
+      {!isComplete && (
+        <div className="flex justify-between items-center text-xs text-muted-foreground">
+          <span>Stage {currentStageIndex + 1} of {stages.length}</span>
+          <span>~{timeRemaining}s remaining</span>
+        </div>
+      )}
+      
+      {isComplete && (
+        <p className="text-sm text-center text-status-complete font-medium animate-fade-in-up">
+          🎉 Processing completed successfully!
+        </p>
+      )}
     </div>
   );
 }

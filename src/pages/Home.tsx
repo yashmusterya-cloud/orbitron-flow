@@ -166,7 +166,7 @@ export default function Home() {
           description: "AP-XLPE-95A selected with 100% match. Pricing calculated.",
         });
       }, 1000);
-    }, 2000);
+    }, 2500);
   };
 
   const handleScanRFPs = () => {
@@ -183,7 +183,7 @@ export default function Home() {
         title: "RFPs Scanned Successfully",
         description: "Found 3 RFPs ready for processing.",
       });
-    }, 2000);
+    }, 2500);
   };
 
   const getStatusBadge = (status: string) => {
@@ -218,8 +218,8 @@ export default function Home() {
               <ProcessingProgress 
                 stages={[
                   { label: "Loading product database...", duration: 800 },
-                  { label: "Analyzing specifications...", duration: 600 },
-                  { label: "Calculating match percentages...", duration: 600 },
+                  { label: "Analyzing specifications...", duration: 800 },
+                  { label: "Calculating match percentages...", duration: 900 },
                 ]}
               />
             </div>

@@ -111,7 +111,7 @@ export default function TechnicalAgent() {
         setTimeout(() => {
           navigate("/pricing-agent", { state: { selectedSKU, rfpRequirements } });
         }, 500);
-      }, 1500);
+      }, 2000);
     }
   };
 
@@ -128,8 +128,8 @@ export default function TechnicalAgent() {
               <h3 className="text-xl font-semibold text-center">Moving to Pricing Agent</h3>
               <ProcessingProgress 
                 stages={[
-                  { label: "Validating product selection...", duration: 500 },
-                  { label: "Preparing pricing data...", duration: 1000 },
+                  { label: "Validating product selection...", duration: 700 },
+                  { label: "Preparing pricing data...", duration: 1300 },
                 ]}
               />
             </div>
