@@ -239,23 +239,18 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="home" className="relative pt-8 pb-20 overflow-hidden">
-        <div className="absolute inset-0 hero-gradient" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-fade-in-up">
-              <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                <Sparkles className="w-3 h-3 mr-1" />
-                Asian Paints Hackathon - Challenge IV
-              </Badge>
-
-              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
                 <span className="animated-gradient-text">OrbitronFlow</span>
                 <br />
-                AI-Powered RFP Automation System
+                <span className="text-foreground">AI-Powered RFP Automation System</span>
               </h1>
 
-              <p className="text-xl text-muted-foreground leading-relaxed">
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">
                 End-to-end automation for B2B RFP qualification, SKU matching & pricing. 
                 Watch the Main Agent orchestrate specialized AI agents working together in real-time.
               </p>
@@ -290,7 +285,7 @@ export default function Home() {
       </section>
 
       {/* RFP Scanning Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-16 bg-gradient-to-b from-background to-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12 animate-fade-in-up">
@@ -452,45 +447,38 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-6">
-            {agentWorkflow.map((workflow, idx) => (
+          <div className="grid md:grid-cols-4 gap-6">
+            {agentWorkflow.slice(0, 4).map((workflow, idx) => (
               <div key={idx} className="relative group">
-                <Card className="h-full border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-in-up cursor-pointer">
-                  <CardContent className="p-6 space-y-4">
+                <Card className="h-full border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-in-up cursor-pointer min-h-[320px] flex flex-col">
+                  <CardContent className="p-6 space-y-4 flex-1 flex flex-col">
                     <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${workflow.color} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 mx-auto shadow-lg`}>
                       <workflow.icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-lg font-bold text-center group-hover:text-primary transition-colors">{workflow.agent}</h3>
-                    <p className="text-sm text-muted-foreground text-center leading-relaxed">
-                      {workflow.description}
-                    </p>
-                    
-                    {/* Tooltip on hover */}
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pt-4 border-t border-border space-y-2">
-                      <div className="text-xs space-y-1">
-                        <p className="font-semibold text-primary">Inputs:</p>
-                        <p className="text-muted-foreground">{workflow.inputs}</p>
-                      </div>
-                      <div className="text-xs space-y-1">
-                        <p className="font-semibold text-status-complete">Outputs:</p>
-                        <p className="text-muted-foreground">{workflow.outputs}</p>
-                      </div>
-                      {workflow.agent === "Main Agent" && (
-                        <div className="text-xs pt-2 border-t border-border">
-                          <p className="font-semibold text-agent-orchestrator">Orchestration:</p>
-                          <p className="text-muted-foreground">
-                            {idx === 0 
-                              ? "Initiates workflow & delegates tasks"
-                              : "Quality checks & generates final output"}
-                          </p>
+
+                    {/* Agent Info */}
+                    <div className="text-center space-y-3 flex-1 flex flex-col">
+                      <h3 className="font-bold text-lg">{workflow.agent}</h3>
+                      <p className="text-sm text-muted-foreground flex-1">{workflow.description}</p>
+                      
+                      <div className="space-y-2 text-xs">
+                        <div className="p-2 bg-muted/50 rounded">
+                          <span className="font-semibold">Input: </span>
+                          <span className="text-muted-foreground">{workflow.inputs}</span>
                         </div>
-                      )}
+                        <div className="p-2 bg-muted/50 rounded">
+                          <span className="font-semibold">Output: </span>
+                          <span className="text-muted-foreground">{workflow.outputs}</span>
+                        </div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
-                {idx < agentWorkflow.length - 1 && (
-                  <div className="hidden md:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 items-center justify-center w-6 h-6 bg-primary rounded-full group-hover:scale-125 transition-transform duration-300">
-                    <ArrowRight className="w-4 h-4 text-white" />
+
+                {/* Arrow between cards */}
+                {idx < 3 && (
+                  <div className="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10">
+                    <ArrowRight className="w-8 h-8 text-primary drop-shadow-lg" />
                   </div>
                 )}
               </div>
@@ -981,6 +969,137 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-gradient-to-b from-muted/30 to-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 space-y-4">
+            <Badge className="bg-primary/10 text-primary border-primary/20">
+              Simple & Transparent
+            </Badge>
+            <h2 className="text-4xl lg:text-5xl font-bold">
+              Pricing Plans
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Choose the plan that fits your RFP automation needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="border-2 hover:border-primary/50 transition-all hover:shadow-xl">
+              <CardHeader>
+                <CardTitle className="text-2xl">Starter</CardTitle>
+                <CardDescription>For small teams</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">₹9,999</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>50 RFPs per month</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>AI-powered SKU matching</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Basic pricing calculations</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Email support</span>
+                  </li>
+                </ul>
+                <Button variant="outline" className="w-full mt-6">
+                  Get Started
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-primary shadow-xl hover:shadow-2xl transition-all relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <Badge className="bg-primary text-white">Most Popular</Badge>
+              </div>
+              <CardHeader>
+                <CardTitle className="text-2xl">Professional</CardTitle>
+                <CardDescription>For growing businesses</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">₹24,999</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>200 RFPs per month</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Advanced AI orchestration</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Complete pricing breakdown</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Priority support</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Custom integrations</span>
+                  </li>
+                </ul>
+                <Button variant="hero" className="w-full mt-6">
+                  Get Started
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 hover:border-primary/50 transition-all hover:shadow-xl">
+              <CardHeader>
+                <CardTitle className="text-2xl">Enterprise</CardTitle>
+                <CardDescription>For large organizations</CardDescription>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold">Custom</span>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Unlimited RFPs</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Full agent orchestration</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Custom AI model training</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>Dedicated account manager</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-status-complete" />
+                    <span>SLA & 24/7 support</span>
+                  </li>
+                </ul>
+                <Button variant="outline" className="w-full mt-6">
+                  Contact Sales
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

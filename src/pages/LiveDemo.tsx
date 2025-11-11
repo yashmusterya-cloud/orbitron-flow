@@ -167,7 +167,7 @@ export default function LiveDemo() {
       )}
 
       {/* Hero Section */}
-      <section className="pt-32 pb-12 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-24 pb-8 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-6 max-w-3xl mx-auto animate-fade-in-up">
             <Badge className="bg-primary/10 text-primary border-primary/20">
@@ -178,12 +178,35 @@ export default function LiveDemo() {
             <p className="text-xl text-muted-foreground">
               Watch the Main Agent orchestrate specialized AI agents to process a complete RFP from start to finish in real-time
             </p>
+            
+            {/* Agent Timeline */}
+            <div className="mt-8 flex items-center justify-center gap-3 flex-wrap">
+              <div className="flex items-center gap-2 px-3 py-2 bg-agent-sales/10 rounded-lg border border-agent-sales/20">
+                <div className="w-6 h-6 rounded-full bg-agent-sales flex items-center justify-center text-white text-xs font-bold">1</div>
+                <span className="text-sm font-medium">Sales Agent</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-muted-foreground" />
+              <div className="flex items-center gap-2 px-3 py-2 bg-agent-technical/10 rounded-lg border border-agent-technical/20">
+                <div className="w-6 h-6 rounded-full bg-agent-technical flex items-center justify-center text-white text-xs font-bold">2</div>
+                <span className="text-sm font-medium">Technical Agent</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-muted-foreground" />
+              <div className="flex items-center gap-2 px-3 py-2 bg-agent-pricing/10 rounded-lg border border-agent-pricing/20">
+                <div className="w-6 h-6 rounded-full bg-agent-pricing flex items-center justify-center text-white text-xs font-bold">3</div>
+                <span className="text-sm font-medium">Pricing Agent</span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-muted-foreground" />
+              <div className="flex items-center gap-2 px-3 py-2 bg-agent-orchestrator/10 rounded-lg border border-agent-orchestrator/20">
+                <div className="w-6 h-6 rounded-full bg-agent-orchestrator flex items-center justify-center text-white text-xs font-bold">4</div>
+                <span className="text-sm font-medium">Main Agent Finalizes</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Step-by-Step Demo */}
-      <section className="py-12">
+      <section className="py-8">
         <div className="container mx-auto px-4 max-w-6xl space-y-12">
           
           {/* Step 1: Load Sample RFP */}

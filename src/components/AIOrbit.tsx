@@ -35,16 +35,16 @@ export function AIOrbit({ className, size = "md" }: AIOrbitProps) {
 
       {/* Agent Nodes */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <AgentNode color="orchestrator" label="Orchestrator" />
+        <AgentNode color="orchestrator" label="Main Agent" shortLabel="O" />
       </div>
       <div className="absolute top-1/2 right-8 -translate-y-1/2">
-        <AgentNode color="technical" label="Technical" />
+        <AgentNode color="technical" label="Technical Agent" shortLabel="T" />
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <AgentNode color="pricing" label="Pricing" />
+        <AgentNode color="pricing" label="Pricing Agent" shortLabel="P" />
       </div>
       <div className="absolute top-1/2 left-8 -translate-y-1/2">
-        <AgentNode color="sales" label="Sales" />
+        <AgentNode color="sales" label="Sales Agent" shortLabel="S" />
       </div>
 
       {/* Connection Lines (SVG) */}
@@ -99,9 +99,10 @@ export function AIOrbit({ className, size = "md" }: AIOrbitProps) {
 interface AgentNodeProps {
   color: "orchestrator" | "technical" | "pricing" | "sales";
   label: string;
+  shortLabel: string;
 }
 
-function AgentNode({ color, label }: AgentNodeProps) {
+function AgentNode({ color, label, shortLabel }: AgentNodeProps) {
   const colorClasses = {
     orchestrator: "bg-agent-orchestrator shadow-[0_0_20px_hsl(var(--agent-orchestrator))]",
     technical: "bg-agent-technical shadow-[0_0_20px_hsl(var(--agent-technical))]",
@@ -113,13 +114,13 @@ function AgentNode({ color, label }: AgentNodeProps) {
     <div className="group relative cursor-pointer">
       <div
         className={cn(
-          "w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xs transition-all duration-300 hover:scale-125",
+          "w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base transition-all duration-300 hover:scale-125",
           colorClasses[color]
         )}
       >
-        {label.slice(0, 1)}
+        {shortLabel}
       </div>
-      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 bg-background/90 backdrop-blur-sm border border-border rounded-lg text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-background/95 backdrop-blur-sm border border-border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg z-10">
         {label}
       </div>
     </div>

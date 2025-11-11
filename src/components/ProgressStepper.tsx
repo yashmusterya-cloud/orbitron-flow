@@ -9,9 +9,10 @@ export type Step = {
 };
 
 const steps: Step[] = [
+  { id: "main", label: "Main Agent", path: "/" },
   { id: "sales", label: "Sales Agent", path: "/" },
-  { id: "technical", label: "Technical Agent", path: "/technical-agent" },
-  { id: "pricing", label: "Pricing Agent", path: "/pricing-agent" },
+  { id: "technical", label: "Technical Agent", path: "/live-demo" },
+  { id: "pricing", label: "Pricing Agent", path: "/live-demo" },
   { id: "final", label: "Final Response", path: "/final-response" },
 ];
 
@@ -64,7 +65,9 @@ export function ProgressStepper() {
                       "flex items-center justify-center w-10 h-10 rounded-full border-2 transition-all duration-300",
                       status === "complete" &&
                         "bg-status-complete border-status-complete text-white",
-                      status === "current" &&
+                      status === "current" && step.id === "main" &&
+                        "bg-agent-orchestrator border-agent-orchestrator text-white animate-pulse-glow",
+                      status === "current" && step.id !== "main" &&
                         "bg-agent-technical border-agent-technical text-white animate-pulse-glow",
                       status === "upcoming" &&
                         "bg-muted border-muted-foreground/30 text-muted-foreground"
@@ -82,7 +85,8 @@ export function ProgressStepper() {
                     className={cn(
                       "hidden md:block text-sm font-medium transition-colors whitespace-nowrap",
                       status === "complete" && "text-status-complete",
-                      status === "current" && "text-agent-technical font-semibold",
+                      status === "current" && step.id === "main" && "text-agent-orchestrator font-semibold",
+                      status === "current" && step.id !== "main" && "text-agent-technical font-semibold",
                       status === "upcoming" && "text-muted-foreground"
                     )}
                   >
