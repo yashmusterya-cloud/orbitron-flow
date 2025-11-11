@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AIOrbit } from "@/components/AIOrbit";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ProgressStepper } from "@/components/ProgressStepper";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Search,
@@ -18,13 +21,24 @@ import {
   GitBranch,
   Sparkles,
   Play,
+  Loader2,
+  ExternalLink,
 } from "lucide-react";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [rfpLoaded, setRfpLoaded] = useState(false);
   const [specMatchRun, setSpecMatchRun] = useState(false);
   const [skuSelected, setSkuSelected] = useState(false);
   const [pricingCalculated, setPricingCalculated] = useState(false);
+  const [rfpUrls, setRfpUrls] = useState("");
+  const [isScanning, setIsScanning] = useState(false);
+  const [rfpList, setRfpList] = useState<Array<{
+    id: string;
+    title: string;
+    dueDate: string;
+    status: "new" | "urgent" | "processing" | "completed";
+  }>>([]);
 
   const agentWorkflow = [
     {
@@ -127,6 +141,28 @@ export default function Home() {
     setPricingCalculated(true);
   };
 
+  const handleScanRFPs = () => {
+    setIsScanning(true);
+    setTimeout(() => {
+      setRfpList([
+        { id: "1", title: "HV Cable Supply - Metro Rail", dueDate: "Aug 30, 2024", status: "urgent" },
+        { id: "2", title: "Electrical Wires - Govt Project", dueDate: "Sep 15, 2024", status: "new" },
+        { id: "3", title: "Power Cables - Industrial", dueDate: "Aug 25, 2024", status: "urgent" },
+      ]);
+      setIsScanning(false);
+    }, 2000);
+  };
+
+  const getStatusBadge = (status: string) => {
+    const styles = {
+      new: "bg-agent-technical text-white",
+      urgent: "bg-status-error text-white",
+      processing: "bg-status-warning text-white",
+      completed: "bg-status-complete text-white",
+    };
+    return styles[status as keyof typeof styles] || styles.new;
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -137,9 +173,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <ProgressStepper />
 
       {/* Hero Section */}
-      <section id="home" className="relative pt-32 pb-20 overflow-hidden">
+      <section id="home" className="relative pt-8 pb-20 overflow-hidden">
         <div className="absolute inset-0 hero-gradient" />
         
         <div className="container mx-auto px-4 relative z-10">
@@ -186,6 +223,109 @@ export default function Home() {
             <div className="relative flex justify-center animate-fade-in-scale stagger-2">
               <AIOrbit size="lg" className="animate-float" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RFP Scanning Section */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12 animate-fade-in-up">
+              <Badge className="bg-agent-sales/10 text-agent-sales border-agent-sales/20 mb-4">
+                Sales Agent
+              </Badge>
+              <h2 className="text-4xl font-bold mb-4">RFP Scanner</h2>
+              <p className="text-xl text-muted-foreground">
+                Monitor tender portals and extract RFP requirements automatically
+              </p>
+            </div>
+
+            {/* URL Input Section */}
+            <Card className="mb-8 animate-fade-in-up stagger-1">
+              <CardHeader>
+                <CardTitle>Enter RFP Source URLs</CardTitle>
+                <CardDescription>
+                  Paste one or multiple URLs from tender portals or RFP documents
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <Textarea
+                    placeholder="https://example.com/rfp1&#10;https://example.com/rfp2&#10;https://example.com/rfp3"
+                    rows={4}
+                    value={rfpUrls}
+                    onChange={(e) => setRfpUrls(e.target.value)}
+                    className="resize-none"
+                  />
+                  <Button
+                    onClick={handleScanRFPs}
+                    disabled={isScanning || !rfpUrls.trim()}
+                    className="w-full sm:w-auto"
+                    size="lg"
+                  >
+                    {isScanning ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Scanning RFPs...
+                      </>
+                    ) : (
+                      <>
+                        <ExternalLink className="mr-2 h-5 w-5" />
+                        Scan RFPs
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* RFP List Table */}
+            {rfpList.length > 0 && (
+              <Card className="animate-fade-in-up stagger-2">
+                <CardHeader>
+                  <CardTitle>Detected RFPs</CardTitle>
+                  <CardDescription>
+                    {rfpList.length} RFP{rfpList.length !== 1 ? "s" : ""} found and analyzed
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>RFP Title</TableHead>
+                          <TableHead>Due Date</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {rfpList.map((rfp) => (
+                          <TableRow key={rfp.id}>
+                            <TableCell className="font-medium">{rfp.title}</TableCell>
+                            <TableCell>{rfp.dueDate}</TableCell>
+                            <TableCell>
+                              <Badge className={getStatusBadge(rfp.status)}>
+                                {rfp.status.charAt(0).toUpperCase() + rfp.status.slice(1)}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button
+                                size="sm"
+                                onClick={() => navigate("/technical-agent")}
+                              >
+                                Respond
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </section>
