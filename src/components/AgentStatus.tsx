@@ -12,9 +12,9 @@ type Agent = {
 
 const agents: Agent[] = [
   { id: "sales", name: "Sales Agent", route: "/" },
-  { id: "technical", name: "Technical Agent", route: "/technical-agent" },
+  { id: "technical", name: "Technical Agent", route: "/live-demo" },
   { id: "pricing", name: "Pricing Agent", route: "/pricing-agent" },
-  { id: "master", name: "Master Agent", route: "/final-response" },
+  { id: "final", name: "Final Response", route: "/final-response" },
 ];
 
 export function AgentStatus() {

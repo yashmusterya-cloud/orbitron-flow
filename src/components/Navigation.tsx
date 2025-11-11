@@ -5,14 +5,10 @@ import { Menu, X, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "How It Works", href: "#how-it-works" },
-  { name: "Demo RFP", href: "#demo" },
-  { name: "SKU Match", href: "#sku-match" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "Final Output", href: "#final-output" },
-  { name: "FAQ", href: "/faq" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "/" },
+  { name: "How It Works", href: "/#how-it-works" },
+  { name: "Live Demo", href: "/live-demo" },
+  { name: "Final Output", href: "/final-response" },
 ];
 
 export function Navigation() {
@@ -25,9 +21,15 @@ export function Navigation() {
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith("#")) {
+    if (href.startsWith("#") || href.includes("#")) {
       e.preventDefault();
-      const element = document.querySelector(href);
+      // If we're not on home page and link is to home section, navigate first
+      if (location.pathname !== "/" && href.includes("#")) {
+        window.location.href = href;
+        return;
+      }
+      const hash = href.includes("#") ? href.split("#")[1] : href.substring(1);
+      const element = document.getElementById(hash);
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
         setMobileMenuOpen(false);
@@ -50,7 +52,7 @@ export function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
-              link.href.startsWith("#") ? (
+              link.href.startsWith("#") || link.href.includes("#") ? (
                 <a
                   key={link.name}
                   href={link.href}
@@ -105,7 +107,7 @@ export function Navigation() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-4 animate-fade-in-up">
             {navLinks.map((link) => (
-              link.href.startsWith("#") ? (
+              link.href.startsWith("#") || link.href.includes("#") ? (
                 <a
                   key={link.name}
                   href={link.href}

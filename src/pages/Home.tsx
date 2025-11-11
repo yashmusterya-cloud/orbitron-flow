@@ -48,31 +48,33 @@ export default function Home() {
   const agentWorkflow = [
     {
       agent: "Sales Agent",
-      description: "Detects RFPs from URLs and monitors tender portals",
+      description: "Monitors tender portals and detects new RFPs",
+      inputs: "RFP URLs, tender portals",
+      outputs: "RFP requirements extracted",
       icon: Search,
       color: "from-agent-sales to-secondary",
     },
     {
-      agent: "Main Agent",
-      description: "Orchestrates workflow and delegates tasks to other agents",
-      icon: GitBranch,
-      color: "from-agent-orchestrator to-agent-orchestrator",
-    },
-    {
       agent: "Technical Agent",
-      description: "Matches RFP specs with product SKUs, calculates Spec Match %",
+      description: "Matches RFP specs with product SKUs, calculates match %",
+      inputs: "RFP specs, product database",
+      outputs: "Best SKU matches with scores",
       icon: Cpu,
       color: "from-agent-technical to-primary",
     },
     {
       agent: "Pricing Agent",
-      description: "Adds pricing for SKUs and test costs",
+      description: "Calculates pricing for SKUs and test costs",
+      inputs: "Selected SKUs, test requirements",
+      outputs: "Complete cost breakdown",
       icon: DollarSign,
       color: "from-agent-pricing to-status-complete",
     },
     {
-      agent: "Main Agent",
-      description: "Generates consolidated RFP Response",
+      agent: "Final Response",
+      description: "Compiles all data into professional RFP response",
+      inputs: "All agent outputs",
+      outputs: "PDF response document",
       icon: FileText,
       color: "from-agent-orchestrator to-agent-orchestrator",
     },
@@ -264,7 +266,7 @@ export default function Home() {
                   variant="outline" 
                   size="xl" 
                   className="group"
-                  onClick={() => scrollToSection("demo")}
+                  onClick={() => navigate("/live-demo")}
                 >
                   <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Try Live Demo
@@ -303,13 +305,33 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
+                  <div className="bg-muted/50 border border-border rounded-lg p-4 mb-4">
+                    <div className="flex items-start gap-3">
+                      <Search className="w-5 h-5 text-agent-sales mt-0.5" />
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium">How Sales Agent Works:</p>
+                        <ul className="text-sm text-muted-foreground space-y-1">
+                          <li>• Continuously monitors multiple tender portals</li>
+                          <li>• Extracts RFP requirements automatically</li>
+                          <li>• Validates URL format and accessibility</li>
+                          <li>• Alerts team about urgent deadlines</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                   <Textarea
-                    placeholder="https://example.com/rfp1&#10;https://example.com/rfp2&#10;https://example.com/rfp3"
+                    placeholder="https://tenderwizard.com/rfp/cable-supply&#10;https://eprocure.gov.in/rfp/electrical-2024&#10;https://gem.gov.in/tender/power-cables"
                     rows={4}
                     value={rfpUrls}
                     onChange={(e) => setRfpUrls(e.target.value)}
                     className="resize-none"
                   />
+                  {rfpUrls.trim() && (
+                    <div className="flex items-center gap-2 text-sm text-status-complete">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>✓ URL format accepted - {rfpUrls.split('\n').filter(u => u.trim()).length} URLs detected</span>
+                    </div>
+                  )}
                   <Button
                     onClick={handleScanRFPs}
                     disabled={isScanning || !rfpUrls.trim()}
@@ -422,23 +444,35 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-4">
+          <div className="grid md:grid-cols-4 gap-6">
             {agentWorkflow.map((workflow, idx) => (
-              <div key={idx} className="relative">
-                <Card className={`group hover-lift border-2 hover:border-primary/50 transition-all animate-fade-in-up stagger-${idx + 1}`}>
+              <div key={idx} className="relative group">
+                <Card className="h-full border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-in-up cursor-pointer">
                   <CardContent className="p-6 space-y-4">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${workflow.color} flex items-center justify-center group-hover:scale-110 transition-transform mx-auto`}>
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${workflow.color} flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 mx-auto shadow-lg`}>
                       <workflow.icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="text-lg font-bold text-center">{workflow.agent}</h3>
+                    <h3 className="text-lg font-bold text-center group-hover:text-primary transition-colors">{workflow.agent}</h3>
                     <p className="text-sm text-muted-foreground text-center leading-relaxed">
                       {workflow.description}
                     </p>
+                    
+                    {/* Tooltip on hover */}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pt-4 border-t border-border space-y-2">
+                      <div className="text-xs space-y-1">
+                        <p className="font-semibold text-primary">Inputs:</p>
+                        <p className="text-muted-foreground">{workflow.inputs}</p>
+                      </div>
+                      <div className="text-xs space-y-1">
+                        <p className="font-semibold text-status-complete">Outputs:</p>
+                        <p className="text-muted-foreground">{workflow.outputs}</p>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
                 {idx < agentWorkflow.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
-                    <ArrowRight className="w-4 h-4 text-primary" />
+                  <div className="hidden md:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10 items-center justify-center w-6 h-6 bg-primary rounded-full group-hover:scale-125 transition-transform duration-300">
+                    <ArrowRight className="w-4 h-4 text-white" />
                   </div>
                 )}
               </div>

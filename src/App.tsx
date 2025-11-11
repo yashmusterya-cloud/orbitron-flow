@@ -4,15 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Platform from "./pages/Platform";
-import Solutions from "./pages/Solutions";
-import Customers from "./pages/Customers";
-import Resources from "./pages/Resources";
-import FAQ from "./pages/FAQ";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import TechnicalAgent from "./pages/TechnicalAgent";
-import PricingAgent from "./pages/PricingAgent";
+import LiveDemo from "./pages/LiveDemo";
 import FinalResponse from "./pages/FinalResponse";
 import NotFound from "./pages/NotFound";
 
@@ -26,16 +18,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/platform" element={<Platform />} />
-          <Route path="/solutions" element={<Solutions />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/technical-agent" element={<TechnicalAgent />} />
-          <Route path="/pricing-agent" element={<PricingAgent />} />
+          <Route path="/live-demo" element={<LiveDemo />} />
           <Route path="/final-response" element={<FinalResponse />} />
+          {/* Legacy routes for backward compatibility */}
+          <Route path="/technical-agent" element={<LiveDemo />} />
+          <Route path="/pricing-agent" element={<LiveDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
