@@ -8,112 +8,126 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Enterprise B2B Neutral Palette */
+    --background: 210 40% 98%; /* #f8fafc - Light slate background */
+    --foreground: 215 35% 17%; /* #1e293b - Dark slate text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 0 0% 100%; /* #ffffff - White cards */
+    --card-foreground: 215 35% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 215 35% 17%;
 
-    /* Brand Colors - B2B Professional */
-    --primary: 221 83% 53%; /* Blue #2563eb - Primary actions */
+    /* Primary Brand Colors - Professional Blue */
+    --primary: 221 72% 40%; /* #1e40af - Deep professional blue */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 221 83% 65%;
+    --primary-glow: 217 91% 60%; /* #3b82f6 - Action blue */
+    --primary-dark: 222 66% 33%; /* #1e3a8a - Dark blue */
 
-    --secondary: 25 95% 53%; /* Orange #d97706 - Warning/Urgent */
+    /* Secondary Colors */
+    --secondary: 215 16% 47%; /* #64748b - Medium slate for secondary actions */
     --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 215 19% 35%; /* #475569 - Darker slate hover */
 
-    /* AI Agent Colors */
-    --agent-orchestrator: 262 83% 58%; /* Purple - Main Agent */
-    --agent-technical: 221 83% 53%; /* Blue - Technical */
-    --agent-pricing: 142 76% 36%; /* Green - Finance */
-    --agent-sales: 25 95% 53%; /* Orange - Discovery */
+    /* AI Agent Colors - Enterprise Professional */
+    --agent-orchestrator: 221 72% 40%; /* Deep Blue - Main orchestration */
+    --agent-technical: 199 89% 32%; /* #0369a1 - Info blue for technical */
+    --agent-pricing: 160 84% 30%; /* #059669 - Professional green */
+    --agent-sales: 217 91% 60%; /* #3b82f6 - Action blue */
 
-    /* Status Colors - B2B Professional */
-    --status-active: 221 83% 53%; /* Processing - Blue */
-    --status-complete: 142 76% 36%; /* Success - Green #16a34a */
-    --status-review: 221 83% 53%; /* Pending - Blue */
-    --status-warning: 25 95% 53%; /* Action Required - Orange #d97706 */
-    --status-error: 0 84% 60%; /* Issues - Red */
+    /* Status Colors - Enterprise Semantic */
+    --status-active: 217 91% 60%; /* #3b82f6 - Active/Processing (Blue) */
+    --status-complete: 160 84% 30%; /* #059669 - Success (Green) */
+    --status-review: 215 16% 47%; /* Pending review (Medium slate) */
+    --status-warning: 32 95% 44%; /* #d97706 - Warning (Amber) */
+    --status-error: 0 72% 51%; /* #dc2626 - Error/Urgent (Red) */
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    /* Neutral UI Colors */
+    --muted: 214 32% 94%; /* #f1f5f9 - Table headers, muted backgrounds */
+    --muted-foreground: 215 16% 47%; /* #64748b - Secondary text */
 
-    --accent: 217 91% 60%;
+    --accent: 217 91% 60%; /* #3b82f6 - Accent blue */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%; /* #dc2626 - Red for destructive actions */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
+    /* Borders & Inputs */
+    --border: 214 32% 91%; /* #e2e8f0 - Light gray borders */
     --input: 214 32% 91%;
-    --ring: 174 84% 32%;
+    --ring: 221 72% 40%; /* Primary blue for focus rings */
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(174, 84%, 32%), hsl(217, 91%, 60%));
-    --gradient-hero: linear-gradient(-45deg, hsl(174, 84%, 32%), hsl(217, 91%, 60%), hsl(262, 83%, 58%), hsl(38, 92%, 50%));
-    --gradient-agent: linear-gradient(135deg, hsl(262, 83%, 58%), hsl(217, 91%, 60%));
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%));
+    --gradient-hero: linear-gradient(-45deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%), hsl(160, 84%, 30%), hsl(199, 89%, 32%));
+    --gradient-agent: linear-gradient(135deg, hsl(221, 72%, 40%), hsl(217, 91%, 60%));
     --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(210, 40%, 98%));
 
-    /* Shadows */
+    /* Enterprise Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 40px hsl(174 84% 45% / 0.3);
-    --shadow-glow-purple: 0 0 40px hsl(262 83% 58% / 0.3);
+    --shadow-glow: 0 0 40px hsl(221 72% 40% / 0.2);
+    --shadow-glow-blue: 0 0 30px hsl(217 91% 60% / 0.3);
 
-    /* Animations */
+    /* Professional Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 215 35% 17%; /* #1e293b - Dark slate */
+    --foreground: 210 40% 98%; /* #f8fafc - Light text */
 
-    --card: 217 33% 17%;
+    --card: 215 28% 22%; /* Slightly lighter than bg */
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
+    --popover: 215 35% 17%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 221 83% 60%;
+    --primary: 217 91% 60%; /* #3b82f6 - Brighter blue for dark mode */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 221 83% 70%;
+    --primary-glow: 217 91% 70%;
+    --primary-dark: 221 72% 40%;
 
-    --secondary: 25 95% 60%;
+    --secondary: 215 20% 55%; /* Lighter slate for dark mode */
     --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 215 20% 45%;
 
-    --agent-orchestrator: 262 83% 65%;
-    --agent-technical: 221 83% 60%;
-    --agent-pricing: 142 76% 45%;
-    --agent-sales: 25 95% 60%;
+    --agent-orchestrator: 221 72% 50%;
+    --agent-technical: 199 89% 45%;
+    --agent-pricing: 160 84% 40%;
+    --agent-sales: 217 91% 65%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --status-active: 217 91% 65%;
+    --status-complete: 160 84% 40%;
+    --status-review: 215 20% 55%;
+    --status-warning: 32 95% 50%;
+    --status-error: 0 72% 60%;
+
+    --muted: 215 28% 25%;
+    --muted-foreground: 215 16% 65%;
 
     --accent: 217 91% 65%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 65%;
+    --destructive: 0 72% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 24%;
-    --input: 217 33% 24%;
-    --ring: 174 84% 42%;
+    --border: 215 28% 30%;
+    --input: 215 28% 30%;
+    --ring: 217 91% 60%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(174, 84%, 42%), hsl(217, 91%, 70%));
-    --gradient-hero: linear-gradient(-45deg, hsl(174, 84%, 42%), hsl(217, 91%, 70%), hsl(262, 83%, 65%), hsl(38, 92%, 58%));
-    --gradient-agent: linear-gradient(135deg, hsl(262, 83%, 65%), hsl(217, 91%, 70%));
-    --gradient-card: linear-gradient(180deg, hsl(217, 33%, 17%), hsl(217, 33%, 20%));
+    --gradient-primary: linear-gradient(135deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%));
+    --gradient-hero: linear-gradient(-45deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%), hsl(160, 84%, 40%), hsl(199, 89%, 45%));
+    --gradient-agent: linear-gradient(135deg, hsl(221, 72%, 50%), hsl(217, 91%, 65%));
+    --gradient-card: linear-gradient(180deg, hsl(215, 28%, 22%), hsl(215, 28%, 25%));
 
-    --shadow-glow: 0 0 40px hsl(174 84% 55% / 0.4);
-    --shadow-glow-purple: 0 0 40px hsl(262 83% 65% / 0.4);
+    --shadow-glow: 0 0 40px hsl(217 91% 65% / 0.3);
+    --shadow-glow-blue: 0 0 30px hsl(217 91% 70% / 0.4);
   }
 }
 
@@ -252,7 +266,7 @@ All colors MUST be HSL.
   }
 
   .animated-gradient-text {
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--agent-orchestrator)), hsl(var(--agent-sales)));
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary-glow)), hsl(var(--agent-technical)), hsl(var(--agent-pricing)));
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
