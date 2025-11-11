@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ROICalculator } from "@/components/ROICalculator";
 import {
   Factory,
   Code,
@@ -253,6 +254,25 @@ export default function Solutions() {
         </div>
       </section>
 
+      {/* ROI Calculator */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
+              ROI Calculator
+            </Badge>
+            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+              See Your Potential <span className="animated-gradient-text">Savings</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Calculate how much time and money RFP AI can save your team
+            </p>
+          </div>
+
+          <ROICalculator />
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
@@ -271,9 +291,11 @@ export default function Solutions() {
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="xl" className="bg-white/10 hover:bg-white/20 border-white/30 text-white">
-                  Schedule Demo
-                </Button>
+                <Link to="/contact">
+                  <Button variant="outline" size="xl" className="bg-white/10 hover:bg-white/20 border-white/30 text-white">
+                    Schedule Demo
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>
