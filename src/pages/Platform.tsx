@@ -242,11 +242,9 @@ export default function Platform() {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
-            <Link to="/pricing">
-              <Button variant="outline" size="xl" className="bg-white/10 hover:bg-white/20 border-white/30 text-white">
-                View Pricing
-              </Button>
-            </Link>
+            <Button variant="outline" size="xl" className="bg-white/10 hover:bg-white/20 border-white/30 text-white">
+              Learn More
+            </Button>
           </div>
         </div>
       </section>

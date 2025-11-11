@@ -9,8 +9,6 @@ const navLinks = [
   { name: "Solutions", href: "/solutions" },
   { name: "Customers", href: "/customers" },
   { name: "Resources", href: "/resources" },
-  { name: "Pricing", href: "/pricing" },
-  { name: "Security", href: "/security" },
 ];
 
 export function Navigation() {

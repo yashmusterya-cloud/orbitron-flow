@@ -44,16 +44,6 @@ export function Footer() {
                   Solutions
                 </Link>
               </li>
-              <li>
-                <Link to="/pricing" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/security" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Security
-                </Link>
-              </li>
             </ul>
           </div>
 
