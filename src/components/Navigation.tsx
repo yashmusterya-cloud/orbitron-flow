@@ -5,10 +5,12 @@ import { Menu, X, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { name: "Platform", href: "/platform" },
-  { name: "Solutions", href: "/solutions" },
-  { name: "Customers", href: "/customers" },
-  { name: "Resources", href: "/resources" },
+  { name: "Home", href: "#home" },
+  { name: "How It Works", href: "#how-it-works" },
+  { name: "Demo RFP", href: "#demo" },
+  { name: "SKU Match", href: "#sku-match" },
+  { name: "Pricing", href: "#pricing" },
+  { name: "Final Output", href: "#final-output" },
   { name: "FAQ", href: "/faq" },
   { name: "Contact", href: "/contact" },
 ];
@@ -17,7 +19,21 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    if (path.startsWith("#")) return false;
+    return location.pathname === path;
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        setMobileMenuOpen(false);
+      }
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -32,20 +48,35 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={cn(
-                  "relative text-sm font-medium transition-colors hover:text-primary",
-                  isActive(link.href) ? "text-primary" : "text-muted-foreground",
-                  "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                  isActive(link.href) && "after:scale-x-100"
-                )}
-              >
-                {link.name}
-              </Link>
+              link.href.startsWith("#") ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "relative text-sm font-medium transition-colors hover:text-primary cursor-pointer",
+                    "text-muted-foreground",
+                    "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                  )}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={cn(
+                    "relative text-sm font-medium transition-colors hover:text-primary",
+                    isActive(link.href) ? "text-primary" : "text-muted-foreground",
+                    "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    isActive(link.href) && "after:scale-x-100"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </div>
 
@@ -74,17 +105,31 @@ export function Navigation() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-4 animate-fade-in-up">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  "block py-2 text-sm font-medium transition-colors",
-                  isActive(link.href) ? "text-primary" : "text-muted-foreground"
-                )}
-              >
-                {link.name}
-              </Link>
+              link.href.startsWith("#") ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "block py-2 text-sm font-medium transition-colors cursor-pointer",
+                    "text-muted-foreground"
+                  )}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    "block py-2 text-sm font-medium transition-colors",
+                    isActive(link.href) ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
               <Link to="/login" onClick={() => setMobileMenuOpen(false)}>

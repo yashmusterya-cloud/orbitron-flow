@@ -1,124 +1,185 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AIOrbit } from "@/components/AIOrbit";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import {
   ArrowRight,
-  Zap,
+  Search,
+  FileText,
   TrendingUp,
-  Shield,
-  Clock,
-  Target,
-  Users,
-  BarChart3,
+  CheckCircle2,
+  DollarSign,
+  Download,
+  Cpu,
+  GitBranch,
   Sparkles,
   Play,
 } from "lucide-react";
-import heroImage from "@/assets/hero-ai-automation.jpg";
 
 export default function Home() {
-  const metrics = [
-    { value: "10x", label: "Faster Responses", icon: Clock },
-    { value: "85%", label: "Higher Win Rate", icon: TrendingUp },
-    { value: "200+", label: "RFPs Monthly", icon: BarChart3 },
+  const [rfpLoaded, setRfpLoaded] = useState(false);
+  const [specMatchRun, setSpecMatchRun] = useState(false);
+  const [skuSelected, setSkuSelected] = useState(false);
+  const [pricingCalculated, setPricingCalculated] = useState(false);
+
+  const agentWorkflow = [
+    {
+      agent: "Sales Agent",
+      description: "Detects RFPs from URLs and monitors tender portals",
+      icon: Search,
+      color: "from-agent-sales to-secondary",
+    },
+    {
+      agent: "Main Agent",
+      description: "Orchestrates workflow and delegates tasks to other agents",
+      icon: GitBranch,
+      color: "from-agent-orchestrator to-agent-orchestrator",
+    },
+    {
+      agent: "Technical Agent",
+      description: "Matches RFP specs with product SKUs, calculates Spec Match %",
+      icon: Cpu,
+      color: "from-agent-technical to-primary",
+    },
+    {
+      agent: "Pricing Agent",
+      description: "Adds pricing for SKUs and test costs",
+      icon: DollarSign,
+      color: "from-agent-pricing to-status-complete",
+    },
+    {
+      agent: "Main Agent",
+      description: "Generates consolidated RFP Response",
+      icon: FileText,
+      color: "from-agent-orchestrator to-agent-orchestrator",
+    },
   ];
 
-  const features = [
+  const sampleRFP = {
+    item: "1100V, 3C 95 sqmm Aluminium Cable",
+    quantity: "1200 meters",
+    insulation: "XLPE",
+    armouring: "Aluminium",
+    standard: "IS 7098 Part-II",
+    tests: ["Tensile test", "Insulation resistance test", "High voltage test"],
+  };
+
+  const oemProducts = [
     {
-      title: "AI Agent Orchestration",
-      description: "Watch multiple specialized AI agents work together in real-time",
-      icon: Sparkles,
-      gradient: "from-agent-orchestrator to-agent-technical",
+      sku: "AP-XLPE-95A",
+      armouring: "Aluminium",
+      insulation: "XLPE",
+      voltage: "1100V",
+      size: "95 sqmm",
+      standard: "IS 7098-II",
     },
     {
-      title: "Autonomous Discovery",
-      description: "24/7 multi-source monitoring with automatic qualification",
-      icon: Target,
-      gradient: "from-agent-sales to-secondary",
+      sku: "AP-XLPE-95C",
+      armouring: "Copper",
+      insulation: "XLPE",
+      voltage: "1100V",
+      size: "95 sqmm",
+      standard: "IS 7098-II",
     },
     {
-      title: "Technical Matching",
-      description: "95% accuracy product catalog AI with confidence scoring",
-      icon: Zap,
-      gradient: "from-agent-technical to-primary",
+      sku: "AP-PVC-95A",
+      armouring: "Aluminium",
+      insulation: "PVC",
+      voltage: "1100V",
+      size: "95 sqmm",
+      standard: "IS 7098-II",
     },
   ];
 
-  const logos = [
-    "Acme Corp",
-    "TechGlobal",
-    "IndustrialX",
-    "ServicePro",
-    "ManufactureCo",
-    "ITSolutions",
+  const specMatchResults = [
+    { sku: "AP-XLPE-95A", match: 100, reason: "All RFP specs matched" },
+    { sku: "AP-XLPE-95C", match: 80, reason: "Armouring different" },
+    { sku: "AP-PVC-95A", match: 60, reason: "Insulation different" },
   ];
+
+  const pricingBreakdown = {
+    pricePerMeter: 420,
+    quantity: 1200,
+    materialCost: 504000,
+    tests: [
+      { name: "Tensile test", cost: 3000 },
+      { name: "Insulation resistance test", cost: 2500 },
+      { name: "High voltage test", cost: 4000 },
+    ],
+    testCosts: 9500,
+    grandTotal: 513500,
+  };
+
+  const handleLoadRFP = () => {
+    setRfpLoaded(true);
+    setSpecMatchRun(false);
+    setSkuSelected(false);
+    setPricingCalculated(false);
+  };
+
+  const handleRunSpecMatch = () => {
+    setSpecMatchRun(true);
+    setSkuSelected(true);
+    setPricingCalculated(true);
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-transparent" />
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-
+      <section id="home" className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 hero-gradient" />
+        
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8 animate-fade-in-up">
               <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
                 <Sparkles className="w-3 h-3 mr-1" />
-                The Future of RFP Automation
+                Asian Paints Hackathon - Challenge IV
               </Badge>
 
               <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-                The First <span className="animated-gradient-text">Visual AI Agent</span> Platform
-                for RFP Automation
+                <span className="animated-gradient-text">OrbitronFlow</span>
+                <br />
+                AI-Powered RFP Automation System
               </h1>
 
               <p className="text-xl text-muted-foreground leading-relaxed">
-                Watch multiple specialized AI agents work together to transform your RFP process
-                from weeks to hours. Real-time orchestration, autonomous discovery, and
-                unparalleled accuracy.
+                End-to-end automation for B2B RFP qualification, SKU matching & pricing. 
+                Watch multiple specialized AI agents work together in real-time.
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Link to="/login">
-                  <Button variant="hero" size="xl" className="group">
-                    Start Free Trial
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Button variant="outline" size="xl" className="group">
-                  <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                  Watch AI Agents in Action
+                <Button 
+                  variant="hero" 
+                  size="xl" 
+                  className="group"
+                  onClick={() => scrollToSection("how-it-works")}
+                >
+                  See How It Works
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              </div>
-
-              {/* Social Proof */}
-              <div className="pt-8 border-t border-border/50">
-                <p className="text-sm text-muted-foreground mb-4">
-                  Trusted by manufacturing, IT, and professional service leaders
-                </p>
-                <div className="flex flex-wrap gap-6">
-                  {logos.map((logo, idx) => (
-                    <span
-                      key={logo}
-                      className={`text-sm font-semibold text-muted-foreground/60 hover:text-foreground transition-colors stagger-${idx + 1}`}
-                    >
-                      {logo}
-                    </span>
-                  ))}
-                </div>
+                <Button 
+                  variant="outline" 
+                  size="xl" 
+                  className="group"
+                  onClick={() => scrollToSection("demo")}
+                >
+                  <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
+                  Try Live Demo
+                </Button>
               </div>
             </div>
 
@@ -129,141 +190,454 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Metrics Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            {metrics.map((metric, idx) => (
-              <Card
-                key={metric.label}
-                className={`hover-lift border-2 hover:border-primary/50 transition-all animate-fade-in-up stagger-${idx + 1}`}
-              >
-                <CardContent className="p-8 text-center space-y-4">
-                  <metric.icon className="w-12 h-12 mx-auto text-primary" />
-                  <div className="text-5xl font-bold gradient-text">{metric.value}</div>
-                  <p className="text-lg text-muted-foreground">{metric.label}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Value Proposition Grid */}
-      <section className="py-20">
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 space-y-4">
             <Badge className="bg-accent/10 text-accent border-accent/20">
-              Multi-Agent AI Platform
+              Agentic AI Workflow
             </Badge>
             <h2 className="text-4xl lg:text-5xl font-bold">
-              AI Agents Working Together
+              How The Agentic AI System Works
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Experience the power of specialized AI agents orchestrating your entire RFP workflow
+              Five specialized AI agents working in perfect harmony to automate your entire RFP process
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, idx) => (
-              <Card
-                key={feature.title}
-                className={`group hover-scale border-2 hover:border-primary/50 transition-all animate-fade-in-up stagger-${idx + 1}`}
-              >
-                <CardContent className="p-8 space-y-4">
-                  <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform`}
-                  >
-                    <feature.icon className="w-8 h-8 text-white" />
+          <div className="grid md:grid-cols-5 gap-4">
+            {agentWorkflow.map((workflow, idx) => (
+              <div key={idx} className="relative">
+                <Card className={`group hover-lift border-2 hover:border-primary/50 transition-all animate-fade-in-up stagger-${idx + 1}`}>
+                  <CardContent className="p-6 space-y-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${workflow.color} flex items-center justify-center group-hover:scale-110 transition-transform mx-auto`}>
+                      <workflow.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-center">{workflow.agent}</h3>
+                    <p className="text-sm text-muted-foreground text-center leading-relaxed">
+                      {workflow.description}
+                    </p>
+                  </CardContent>
+                </Card>
+                {idx < agentWorkflow.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
+                    <ArrowRight className="w-4 h-4 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-bold">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-                  <Link
-                    to="/platform"
-                    className="inline-flex items-center text-primary hover:text-primary-glow transition-colors group/link"
-                  >
-                    Learn more
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
-                </CardContent>
-              </Card>
+                )}
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Results Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent">
+      {/* Demo RFP Section */}
+      <section id="demo" className="py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h2 className="text-4xl lg:text-5xl font-bold">
-              Real Results from Real Customers
-            </h2>
-            <Card className="border-2 hover:border-primary/50 transition-all">
-              <CardContent className="p-12 space-y-6">
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold">
-                    JD
+          <div className="text-center mb-12 space-y-4">
+            <h2 className="text-4xl lg:text-5xl font-bold">Live Demo: RFP Processing</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              See how OrbitronFlow processes a real RFP from start to finish
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="text-center">
+              <Button 
+                variant="hero" 
+                size="xl" 
+                onClick={handleLoadRFP}
+                className="group"
+              >
+                <FileText className="w-5 h-5 mr-2" />
+                Load Sample RFP
+                <Sparkles className="w-5 h-5 ml-2 group-hover:rotate-12 transition-transform" />
+              </Button>
+            </div>
+
+            {rfpLoaded && (
+              <Card className="border-2 border-primary/50 animate-fade-in-up">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-primary" />
+                    Sample RFP - Cable Procurement
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Item Description</p>
+                      <p className="font-semibold">{sampleRFP.item}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Quantity</p>
+                      <p className="font-semibold">{sampleRFP.quantity}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Insulation Type</p>
+                      <p className="font-semibold">{sampleRFP.insulation}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Armouring Type</p>
+                      <p className="font-semibold">{sampleRFP.armouring}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Standard Compliance</p>
+                      <p className="font-semibold">{sampleRFP.standard}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Tests Required</p>
+                      <div className="flex flex-wrap gap-2 mt-1">
+                        {sampleRFP.tests.map((test, idx) => (
+                          <Badge key={idx} variant="outline">{test}</Badge>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="font-semibold text-lg">John Davidson</div>
-                    <div className="text-sm text-muted-foreground">VP of Sales, TechGlobal</div>
-                  </div>
-                </div>
-                <blockquote className="text-2xl leading-relaxed">
-                  "RFP AI transformed our entire sales process. We went from spending 3 weeks per
-                  RFP to just 2 days, with a <span className="text-primary font-semibold">92% win rate improvement</span>. The
-                  AI agents handle everything—it's like having 10 experts working 24/7."
-                </blockquote>
-                <div className="flex justify-center gap-8 pt-4">
-                  <div>
-                    <div className="text-3xl font-bold text-primary">15x</div>
-                    <div className="text-sm text-muted-foreground">Faster</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary">92%</div>
-                    <div className="text-sm text-muted-foreground">Win Rate</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold text-primary">200h</div>
-                    <div className="text-sm text-muted-foreground">Saved Monthly</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <Card className="bg-gradient-to-br from-primary via-accent to-agent-orchestrator border-0">
-            <CardContent className="p-16 text-center space-y-8 text-white">
-              <h2 className="text-4xl lg:text-5xl font-bold">
-                Ready to See Your AI Agents in Action?
-              </h2>
-              <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                Join hundreds of enterprise teams transforming their RFP process with multi-agent
-                AI orchestration
+      {/* OEM Product Dataset Section */}
+      {rfpLoaded && (
+        <section id="sku-match" className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12 space-y-4">
+              <Badge className="bg-agent-technical/10 text-agent-technical border-agent-technical/20">
+                Product Database
+              </Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold">OEM Product Database</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Our system matches RFP requirements against our comprehensive product catalog
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Link to="/login">
-                  <Button variant="secondary" size="xl" className="group">
-                    Start Free Trial
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/platform">
-                  <Button variant="outline" size="xl" className="bg-white/10 hover:bg-white/20 border-white/30 text-white">
-                    Schedule Private Demo
-                  </Button>
-                </Link>
+            </div>
+
+            <div className="max-w-6xl mx-auto space-y-8">
+              <Card className="animate-fade-in-up">
+                <CardContent className="p-6">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>SKU</TableHead>
+                        <TableHead>Armouring</TableHead>
+                        <TableHead>Insulation</TableHead>
+                        <TableHead>Voltage</TableHead>
+                        <TableHead>Size</TableHead>
+                        <TableHead>Standard</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {oemProducts.map((product) => (
+                        <TableRow key={product.sku}>
+                          <TableCell className="font-semibold">{product.sku}</TableCell>
+                          <TableCell>{product.armouring}</TableCell>
+                          <TableCell>{product.insulation}</TableCell>
+                          <TableCell>{product.voltage}</TableCell>
+                          <TableCell>{product.size}</TableCell>
+                          <TableCell>{product.standard}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              <div className="text-center">
+                <Button 
+                  variant="hero" 
+                  size="xl" 
+                  onClick={handleRunSpecMatch}
+                  className="group"
+                >
+                  <Cpu className="w-5 h-5 mr-2" />
+                  Run Spec Match Analysis
+                  <TrendingUp className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+
+              {specMatchRun && (
+                <Card className="border-2 border-agent-technical/50 animate-fade-in-up">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Cpu className="w-6 h-6 text-agent-technical" />
+                      Spec Match Comparison Results
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>SKU</TableHead>
+                          <TableHead>Match %</TableHead>
+                          <TableHead>Reason</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {specMatchResults.map((result) => (
+                          <TableRow key={result.sku}>
+                            <TableCell className="font-semibold">{result.sku}</TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <div className="w-full max-w-[200px] bg-muted rounded-full h-2">
+                                  <div 
+                                    className={`h-full rounded-full ${
+                                      result.match === 100 ? 'bg-status-complete' : 
+                                      result.match >= 80 ? 'bg-status-active' : 
+                                      'bg-status-warning'
+                                    }`}
+                                    style={{ width: `${result.match}%` }}
+                                  />
+                                </div>
+                                <span className="font-bold">{result.match}%</span>
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">{result.reason}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Selected SKU Section */}
+      {skuSelected && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <Card className="border-2 border-status-complete/50 bg-status-complete/5 animate-fade-in-up">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle2 className="w-6 h-6 text-status-complete" />
+                      Final Selected SKU
+                    </CardTitle>
+                    <Badge className="bg-status-complete text-white">Selected</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">SKU Code</p>
+                      <p className="text-2xl font-bold text-status-complete">AP-XLPE-95A</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Match Percentage</p>
+                      <p className="text-2xl font-bold text-status-complete">100%</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">Why Selected</p>
+                    <p className="text-lg font-semibold">All RFP specifications matched perfectly</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      <Badge variant="outline" className="border-status-complete text-status-complete">
+                        ✓ Voltage: 1100V
+                      </Badge>
+                      <Badge variant="outline" className="border-status-complete text-status-complete">
+                        ✓ Insulation: XLPE
+                      </Badge>
+                      <Badge variant="outline" className="border-status-complete text-status-complete">
+                        ✓ Armouring: Aluminium
+                      </Badge>
+                      <Badge variant="outline" className="border-status-complete text-status-complete">
+                        ✓ Size: 95 sqmm
+                      </Badge>
+                      <Badge variant="outline" className="border-status-complete text-status-complete">
+                        ✓ Standard: IS 7098-II
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Pricing Section */}
+      {pricingCalculated && (
+        <section id="pricing" className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12 space-y-4">
+              <Badge className="bg-agent-pricing/10 text-agent-pricing border-agent-pricing/20">
+                Pricing Agent
+              </Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold">Pricing Calculation</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Automated pricing with material costs and testing requirements
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <Card className="border-2 border-agent-pricing/50 animate-fade-in-up">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <DollarSign className="w-6 h-6 text-agent-pricing" />
+                    Cost Breakdown
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center pb-4 border-b">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Product Price</p>
+                        <p className="font-semibold">₹{pricingBreakdown.pricePerMeter} per meter</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center pb-4 border-b">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Material Cost</p>
+                        <p className="font-semibold">{pricingBreakdown.quantity} meters × ₹{pricingBreakdown.pricePerMeter}</p>
+                      </div>
+                      <p className="text-xl font-bold">₹{pricingBreakdown.materialCost.toLocaleString()}</p>
+                    </div>
+
+                    <div className="space-y-3 pb-4 border-b">
+                      <p className="text-sm text-muted-foreground">Test Costs</p>
+                      {pricingBreakdown.tests.map((test) => (
+                        <div key={test.name} className="flex justify-between items-center ml-4">
+                          <p className="font-medium">{test.name}</p>
+                          <p className="font-semibold">₹{test.cost.toLocaleString()}</p>
+                        </div>
+                      ))}
+                      <div className="flex justify-between items-center ml-4 pt-2">
+                        <p className="font-semibold">Total Test Costs</p>
+                        <p className="font-bold">₹{pricingBreakdown.testCosts.toLocaleString()}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center pt-2">
+                      <p className="text-xl font-bold">Grand Total</p>
+                      <p className="text-3xl font-bold text-agent-pricing">
+                        ₹{pricingBreakdown.grandTotal.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Final Output Section */}
+      {pricingCalculated && (
+        <section id="final-output" className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12 space-y-4">
+              <Badge className="bg-agent-orchestrator/10 text-agent-orchestrator border-agent-orchestrator/20">
+                Final RFP Response
+              </Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold">Generated RFP Response</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Complete, professional RFP response ready for submission
+              </p>
+            </div>
+
+            <div className="max-w-6xl mx-auto space-y-6">
+              <Card className="border-2 border-agent-orchestrator/50 animate-fade-in-up">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-agent-orchestrator" />
+                    Consolidated RFP Response Document
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                  <div className="space-y-4">
+                    <div className="p-6 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Search className="w-5 h-5 text-agent-sales" />
+                        <h3 className="font-bold">Sales Agent Summary</h3>
+                      </div>
+                      <p className="text-muted-foreground">
+                        RFP detected and qualified for cable procurement. Specifications verified against requirements: 
+                        1100V, 3C 95 sqmm Aluminium Cable with XLPE insulation, IS 7098 Part-II compliant.
+                      </p>
+                    </div>
+
+                    <div className="p-6 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Cpu className="w-5 h-5 text-agent-technical" />
+                        <h3 className="font-bold">Technical Agent Match Result</h3>
+                      </div>
+                      <p className="text-muted-foreground mb-3">
+                        SKU <strong className="text-foreground">AP-XLPE-95A</strong> selected with <strong className="text-status-complete">100% specification match</strong>.
+                        All parameters including voltage, insulation type, armouring, size, and standard compliance verified.
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge className="bg-status-complete/10 text-status-complete border-status-complete/20">
+                          Voltage Match: 100%
+                        </Badge>
+                        <Badge className="bg-status-complete/10 text-status-complete border-status-complete/20">
+                          Material Match: 100%
+                        </Badge>
+                        <Badge className="bg-status-complete/10 text-status-complete border-status-complete/20">
+                          Standard Match: 100%
+                        </Badge>
+                      </div>
+                    </div>
+
+                    <div className="p-6 bg-muted/50 rounded-lg">
+                      <div className="flex items-center gap-2 mb-3">
+                        <DollarSign className="w-5 h-5 text-agent-pricing" />
+                        <h3 className="font-bold">Pricing Agent Cost Breakdown</h3>
+                      </div>
+                      <div className="space-y-2 text-muted-foreground">
+                        <p>• Material Cost: ₹{pricingBreakdown.materialCost.toLocaleString()} ({pricingBreakdown.quantity} meters @ ₹{pricingBreakdown.pricePerMeter}/meter)</p>
+                        <p>• Testing Costs: ₹{pricingBreakdown.testCosts.toLocaleString()} (Tensile, IR, HV tests)</p>
+                        <p className="text-lg font-bold text-foreground pt-2">
+                          Total Quote: ₹{pricingBreakdown.grandTotal.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-center pt-6">
+                    <Button variant="hero" size="xl" className="group">
+                      <Download className="w-5 h-5 mr-2" />
+                      Download Final RFP Response (PDF)
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gradient-to-br from-primary via-accent to-agent-orchestrator border-0">
+                <CardContent className="p-12 text-center space-y-6 text-white">
+                  <CheckCircle2 className="w-16 h-16 mx-auto" />
+                  <h3 className="text-3xl font-bold">RFP Response Complete!</h3>
+                  <p className="text-xl opacity-90 max-w-2xl mx-auto">
+                    OrbitronFlow has successfully processed your RFP from detection to final response generation 
+                    in seconds. The complete multi-agent workflow delivered accurate SKU matching, competitive pricing, 
+                    and a professional submission-ready document.
+                  </p>
+                  <div className="grid grid-cols-3 gap-6 pt-6">
+                    <div>
+                      <div className="text-4xl font-bold">100%</div>
+                      <div className="text-sm opacity-80">Spec Match</div>
+                    </div>
+                    <div>
+                      <div className="text-4xl font-bold">5</div>
+                      <div className="text-sm opacity-80">AI Agents</div>
+                    </div>
+                    <div>
+                      <div className="text-4xl font-bold">&lt;1min</div>
+                      <div className="text-sm opacity-80">Process Time</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </div>
