@@ -26,6 +26,7 @@ import {
   Play,
   Loader2,
   ExternalLink,
+  FileCheck,
 } from "lucide-react";
 
 export default function Home() {
@@ -79,12 +80,12 @@ export default function Home() {
       color: "from-agent-pricing to-status-complete",
     },
     {
-      agent: "Main Agent",
-      description: "Validates outputs and generates final RFP response",
-      inputs: "All agent outputs",
-      outputs: "Professional RFP response document",
-      icon: FileText,
-      color: "from-agent-orchestrator to-agent-orchestrator",
+      agent: "Final Response",
+      description: "Generates professional RFP response document with all validations complete",
+      inputs: "All agent outputs, validations",
+      outputs: "Complete RFP response PDF",
+      icon: FileCheck,
+      color: "from-status-complete to-accent",
     },
   ];
 
@@ -447,8 +448,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
-            {agentWorkflow.slice(0, 4).map((workflow, idx) => (
+          <div className="grid md:grid-cols-5 gap-6">
+            {agentWorkflow.map((workflow, idx) => (
               <div key={idx} className="relative group">
                 <Card className="h-full border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 animate-fade-in-up cursor-pointer min-h-[320px] flex flex-col">
                   <CardContent className="p-6 space-y-4 flex-1 flex flex-col">
@@ -476,7 +477,7 @@ export default function Home() {
                 </Card>
 
                 {/* Arrow between cards */}
-                {idx < 3 && (
+                {idx < 4 && (
                   <div className="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10">
                     <ArrowRight className="w-8 h-8 text-primary drop-shadow-lg" />
                   </div>
