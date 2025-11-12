@@ -145,8 +145,11 @@ export default function LiveDemo() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <ProgressStepper />
-      <AgentStatus />
+      
+      <div className="sticky top-16 z-40">
+        <ProgressStepper />
+        <AgentStatus />
+      </div>
 
       {/* Loading Overlay */}
       {isProcessing && (
