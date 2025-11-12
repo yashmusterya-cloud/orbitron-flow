@@ -80,7 +80,7 @@ const oemProducts: ProductMatch[] = [
 ];
 
 export default function TechnicalAgent() {
-  const [selectedSKU, setSelectedSKU] = useState<string | null>(null);
+  const [selectedSKU, setSelectedSKU] = useState<string | null>("AP-XLPE-95A"); // Auto-select best match
   const [isProcessing, setIsProcessing] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -117,8 +117,10 @@ export default function TechnicalAgent() {
 
   return (
     <div className="min-h-screen bg-background">
-      <ProgressStepper />
-      <AgentStatus />
+      <div className="sticky top-0 z-40">
+        <ProgressStepper />
+        <AgentStatus />
+      </div>
       
       {/* Loading Overlay */}
       {isProcessing && (

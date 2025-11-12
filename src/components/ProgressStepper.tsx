@@ -41,7 +41,7 @@ export function ProgressStepper() {
   };
 
   return (
-    <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-lg border-b border-border shadow-md">
+    <div className="bg-background/95 backdrop-blur-lg border-b border-border shadow-md">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between overflow-x-auto scrollbar-hide">
           {steps.map((step, index) => {

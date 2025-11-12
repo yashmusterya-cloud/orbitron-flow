@@ -47,8 +47,10 @@ export default function PricingAgent() {
 
   return (
     <div className="min-h-screen bg-background">
-      <ProgressStepper />
-      <AgentStatus />
+      <div className="sticky top-0 z-40">
+        <ProgressStepper />
+        <AgentStatus />
+      </div>
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
