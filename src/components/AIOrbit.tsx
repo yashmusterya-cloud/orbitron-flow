@@ -35,16 +35,16 @@ export function AIOrbit({ className, size = "md" }: AIOrbitProps) {
 
       {/* Agent Nodes */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <AgentNode color="orchestrator" label="Main Agent" shortLabel="O" />
+        <AgentNode color="orchestrator" label="Main Agent" shortLabel="O" position="top" />
       </div>
       <div className="absolute top-1/2 right-8 -translate-y-1/2">
-        <AgentNode color="technical" label="Technical Agent" shortLabel="T" />
+        <AgentNode color="technical" label="Technical Agent" shortLabel="T" position="right" />
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <AgentNode color="pricing" label="Pricing Agent" shortLabel="P" />
+        <AgentNode color="pricing" label="Pricing Agent" shortLabel="P" position="bottom" />
       </div>
       <div className="absolute top-1/2 left-8 -translate-y-1/2">
-        <AgentNode color="sales" label="Sales Agent" shortLabel="S" />
+        <AgentNode color="sales" label="Sales Agent" shortLabel="S" position="left" />
       </div>
 
       {/* Connection Lines (SVG) */}
@@ -100,9 +100,10 @@ interface AgentNodeProps {
   color: "orchestrator" | "technical" | "pricing" | "sales";
   label: string;
   shortLabel: string;
+  position: "top" | "right" | "bottom" | "left";
 }
 
-function AgentNode({ color, label, shortLabel }: AgentNodeProps) {
+function AgentNode({ color, label, shortLabel, position }: AgentNodeProps) {
   const colorClasses = {
     orchestrator: "bg-agent-orchestrator shadow-[0_0_20px_hsl(var(--agent-orchestrator))]",
     technical: "bg-agent-technical shadow-[0_0_20px_hsl(var(--agent-technical))]",
@@ -110,8 +111,15 @@ function AgentNode({ color, label, shortLabel }: AgentNodeProps) {
     sales: "bg-agent-sales shadow-[0_0_20px_hsl(var(--agent-sales))]",
   };
 
+  const labelPositionClasses = {
+    top: "top-full left-1/2 -translate-x-1/2 mt-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2",
+    bottom: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+  };
+
   return (
-    <div className="group relative cursor-pointer">
+    <div className="group relative cursor-pointer flex items-center">
       <div
         className={cn(
           "w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base transition-all duration-300 hover:scale-125",
@@ -120,7 +128,10 @@ function AgentNode({ color, label, shortLabel }: AgentNodeProps) {
       >
         {shortLabel}
       </div>
-      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-2 bg-background/95 backdrop-blur-sm border border-border rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg z-10">
+      <div className={cn(
+        "absolute px-3 py-1.5 bg-background/95 backdrop-blur-sm border border-border rounded-lg text-sm font-medium whitespace-nowrap shadow-lg",
+        labelPositionClasses[position]
+      )}>
         {label}
       </div>
     </div>
