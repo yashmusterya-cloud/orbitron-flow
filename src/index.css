@@ -374,6 +374,38 @@ All colors MUST be HSL.
   .success-check {
     animation: check-scale 0.5s ease-out forwards;
   }
+  
+  /* Workflow State Classes */
+  .workflow-step-completed {
+    @apply bg-status-complete/10 border-status-complete/30 text-status-complete;
+  }
+  
+  .workflow-step-active {
+    @apply bg-primary/10 border-primary ring-2 ring-primary/50 text-primary font-semibold;
+  }
+  
+  .workflow-step-pending {
+    @apply bg-muted border-muted-foreground/20 text-muted-foreground opacity-60;
+  }
+  
+  /* Table Alignment - Professional B2B */
+  .table-align-right {
+    @apply text-right;
+  }
+  
+  .table-align-numbers {
+    @apply text-right tabular-nums;
+  }
+  
+  /* Consistent Spacing - 8px Grid System */
+  .spacing-xs { @apply gap-2; /* 8px */ }
+  .spacing-sm { @apply gap-4; /* 16px */ }
+  .spacing-md { @apply gap-6; /* 24px */ }
+  .spacing-lg { @apply gap-8; /* 32px */ }
+  .spacing-xl { @apply gap-12; /* 48px */ }
+  
+  .padding-card { @apply p-6; /* 24px */ }
+  .padding-section { @apply py-8 px-4; /* 32px vertical, 16px horizontal */ }
 }
 
 /* Custom Scrollbar */

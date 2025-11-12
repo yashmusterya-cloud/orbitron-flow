@@ -27,9 +27,9 @@ export default function PricingAgent() {
     quantity: 1200,
     materialCost: 504000,
     tests: [
-      { name: "Tensile test", cost: 3000 },
-      { name: "Insulation resistance test (IR)", cost: 2500 },
-      { name: "High voltage test (HV)", cost: 4000 },
+      { name: "Tensile Strength Test", cost: 3000 },
+      { name: "Insulation Resistance Test (IR)", cost: 2500 },
+      { name: "High Voltage Test (HV)", cost: 4000 },
     ],
     testCosts: 9500,
     grandTotal: 513500,

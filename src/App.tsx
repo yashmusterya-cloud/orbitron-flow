@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import LiveDemo from "./pages/LiveDemo";
+import TechnicalAgent from "./pages/TechnicalAgent";
+import PricingAgent from "./pages/PricingAgent";
 import Platform from "./pages/Platform";
 import Solutions from "./pages/Solutions";
 import Customers from "./pages/Customers";
@@ -26,6 +28,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/live-demo" element={<LiveDemo />} />
+          <Route path="/technical-agent" element={<TechnicalAgent />} />
+          <Route path="/pricing-agent" element={<PricingAgent />} />
           <Route path="/final-response" element={<FinalResponse />} />
           <Route path="/login" element={<Login />} />
           {/* Additional Pages - Available via Footer */}
@@ -35,9 +39,6 @@ const App = () => (
           <Route path="/resources" element={<Resources />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
-          {/* Legacy routes for backward compatibility */}
-          <Route path="/technical-agent" element={<LiveDemo />} />
-          <Route path="/pricing-agent" element={<LiveDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

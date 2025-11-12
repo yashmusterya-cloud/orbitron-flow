@@ -36,7 +36,7 @@ export default function LiveDemo() {
     voltage: "1100V",
     size: "95 sqmm",
     standard: "IS 7098 Part-II",
-    tests: ["Tensile test", "Insulation resistance test", "High voltage test"],
+    tests: ["Tensile Strength Test", "Insulation Resistance Test", "High Voltage Test"],
   };
 
   const skuMatches = [
@@ -78,9 +78,9 @@ export default function LiveDemo() {
     quantity: 1200,
     materialCost: 504000,
     tests: [
-      { name: "Tensile test", cost: 3000 },
-      { name: "Insulation resistance test", cost: 2500 },
-      { name: "High voltage test", cost: 4000 },
+      { name: "Tensile Strength Test", cost: 3000 },
+      { name: "Insulation Resistance Test", cost: 2500 },
+      { name: "High Voltage Test", cost: 4000 },
     ],
     totalTestCost: 9500,
     grandTotal: 513500,
