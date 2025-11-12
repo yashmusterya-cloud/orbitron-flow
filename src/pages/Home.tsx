@@ -7,7 +7,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { AIOrbit } from "@/components/AIOrbit";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ProgressStepper } from "@/components/ProgressStepper";
 import { AgentStatus } from "@/components/AgentStatus";
 import { ProcessingProgress } from "@/components/ProcessingProgress";
 import { useNavigate } from "react-router-dom";
@@ -217,7 +216,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <ProgressStepper />
       <AgentStatus />
       
       {/* Loading Overlay */}

@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { ProgressStepper } from "@/components/ProgressStepper";
 import { AgentStatus } from "@/components/AgentStatus";
 import { ProcessingProgress } from "@/components/ProcessingProgress";
 import { useNavigate } from "react-router-dom";
@@ -147,7 +146,6 @@ export default function LiveDemo() {
       <Navigation />
       
       <div className="sticky top-16 z-40">
-        <ProgressStepper />
         <AgentStatus />
       </div>
 
