@@ -256,6 +256,12 @@ export default function Home() {
                 Watch the Main Agent orchestrate specialized AI agents working together in real-time.
               </p>
 
+              <div className="my-6 py-4 animate-fade-in-up stagger-1">
+                <p className="text-2xl md:text-3xl font-semibold text-primary leading-snug max-w-3xl">
+                  Stop losing bids to faster competitors. Our AI captures revenue that manual processes simply miss
+                </p>
+              </div>
+
               <div className="flex flex-wrap gap-4">
                 <Button 
                   variant="hero" 
