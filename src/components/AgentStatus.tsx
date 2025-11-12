@@ -12,10 +12,8 @@ type Agent = {
 
 const agents: Agent[] = [
   { id: "main-start", name: "Main Agent", route: "/" },
-  { id: "sales", name: "Sales Agent", route: "/" },
-  { id: "main-tech", name: "Main Agent", route: "/live-demo" },
-  { id: "technical", name: "Technical Agent", route: "/live-demo" },
-  { id: "main-pricing", name: "Main Agent", route: "/pricing-agent" },
+  { id: "sales", name: "Sales Agent", route: "/live-demo" },
+  { id: "technical", name: "Technical Agent", route: "/technical-agent" },
   { id: "pricing", name: "Pricing Agent", route: "/pricing-agent" },
   { id: "main-final", name: "Main Agent", route: "/final-response" },
 ];
@@ -45,20 +43,23 @@ export function AgentStatus() {
                 className={cn(
                   "flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-300",
                   status === "complete" && "bg-status-complete/10",
-                  status === "processing" && agent.name === "Main Agent" 
-                    ? "bg-agent-orchestrator/10 animate-pulse-glow" 
-                    : status === "processing" && "bg-agent-technical/10 animate-pulse-glow",
+                  status === "processing" && agent.name === "Main Agent" && "bg-agent-orchestrator/10 animate-pulse-glow",
+                  status === "processing" && agent.name === "Sales Agent" && "bg-agent-sales/10 animate-pulse-glow",
+                  status === "processing" && agent.name === "Technical Agent" && "bg-agent-technical/10 animate-pulse-glow",
+                  status === "processing" && agent.name === "Pricing Agent" && "bg-agent-pricing/10 animate-pulse-glow",
                   status === "pending" && "bg-muted/50"
                 )}
                 title={
                   agent.name === "Main Agent" && status === "processing"
                     ? agent.id === "main-start" 
                       ? "Main Agent: Orchestrating workflow"
-                      : agent.id === "main-tech"
-                      ? "Main Agent: Delegating to Technical Agent"
-                      : agent.id === "main-pricing"
-                      ? "Main Agent: Synthesizing pricing data"
                       : "Main Agent: Generating final response"
+                    : agent.name === "Sales Agent"
+                    ? "Sales Agent: Identifying and qualifying RFPs"
+                    : agent.name === "Technical Agent"
+                    ? "Technical Agent: Matching SKUs to specifications"
+                    : agent.name === "Pricing Agent"
+                    ? "Pricing Agent: Calculating costs and pricing"
                     : ""
                 }
               >
@@ -68,7 +69,10 @@ export function AgentStatus() {
                 {status === "processing" && (
                   <Loader2 className={cn(
                     "w-4 h-4 animate-spin",
-                    agent.name === "Main Agent" ? "text-agent-orchestrator" : "text-agent-technical"
+                    agent.name === "Main Agent" && "text-agent-orchestrator",
+                    agent.name === "Sales Agent" && "text-agent-sales",
+                    agent.name === "Technical Agent" && "text-agent-technical",
+                    agent.name === "Pricing Agent" && "text-agent-pricing"
                   )} />
                 )}
                 {status === "pending" && (
@@ -78,9 +82,10 @@ export function AgentStatus() {
                   className={cn(
                     "text-sm font-medium",
                     status === "complete" && "text-status-complete",
-                    status === "processing" && agent.name === "Main Agent" 
-                      ? "text-agent-orchestrator" 
-                      : status === "processing" && "text-agent-technical",
+                    status === "processing" && agent.name === "Main Agent" && "text-agent-orchestrator",
+                    status === "processing" && agent.name === "Sales Agent" && "text-agent-sales",
+                    status === "processing" && agent.name === "Technical Agent" && "text-agent-technical",
+                    status === "processing" && agent.name === "Pricing Agent" && "text-agent-pricing",
                     status === "pending" && "text-muted-foreground"
                   )}
                 >

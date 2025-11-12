@@ -136,10 +136,10 @@ export default function LiveDemo() {
 
   const handleGenerateResponse = () => {
     toast({
-      title: "Navigating to Final Response",
-      description: "Compiling complete RFP response document.",
+      title: "Proceeding to Technical Agent",
+      description: "Moving to SKU matching and technical analysis...",
     });
-    navigate("/final-response");
+    navigate("/technical-agent");
   };
 
   return (
@@ -569,7 +569,7 @@ export default function LiveDemo() {
                   </CardTitle>
                 </div>
                 <CardDescription>
-                  Compile all agent outputs into professional RFP response document
+                  Sales Agent analysis complete. Ready to proceed to Technical Agent for SKU matching.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -577,8 +577,8 @@ export default function LiveDemo() {
                   <div className="flex items-center gap-3 mb-4">
                     <CheckCircle2 className="w-8 h-8 text-status-complete" />
                     <div>
-                      <p className="font-bold text-lg">All Agent Processing Complete!</p>
-                      <p className="text-sm text-muted-foreground">RFP response is ready for generation</p>
+                      <p className="font-bold text-lg">Sales Agent Processing Complete!</p>
+                      <p className="text-sm text-muted-foreground">RFP requirements extracted and ready for technical matching</p>
                     </div>
                   </div>
                   <div className="grid md:grid-cols-3 gap-4 mb-4">
@@ -604,8 +604,8 @@ export default function LiveDemo() {
                     onClick={handleGenerateResponse}
                     className="group"
                   >
-                    <Download className="w-5 h-5 mr-2" />
-                    Generate Final Response
+                    <ArrowRight className="w-5 h-5 mr-2" />
+                    Proceed to Technical Agent
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
