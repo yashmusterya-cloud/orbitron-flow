@@ -216,7 +216,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <AgentStatus />
+      <div className="sticky top-16 z-40">
+        <AgentStatus />
+      </div>
       
       {/* Loading Overlay */}
       {isProcessing && (
