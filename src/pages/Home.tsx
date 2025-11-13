@@ -239,7 +239,7 @@ export default function Home() {
       )}
 
       {/* Hero Section */}
-      <section id="home" className="relative pt-8 pb-20 overflow-hidden">
+      <section id="home" className="relative pt-24 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
         
         <div className="container mx-auto px-4 relative z-10">
